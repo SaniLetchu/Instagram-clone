@@ -1,6 +1,20 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Container, Box } from '@mui/material';
+import LoginForm from '../../components/LoginForm';
 
 export default function LoginPage() {
-	return <div>asdasdasd</div>;
+	return (
+		<Container sx={{ display: 'flex', justifyContent: 'center' }}>
+			<Box
+				sx={{
+					width: 400,
+					px: 5,
+					py: 3,
+					border: '1px solid rgb(219, 219, 219)',
+				}}
+			>
+				<LoginForm />
+			</Box>
+		</Container>
+	);
 }

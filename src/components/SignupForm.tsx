@@ -8,7 +8,6 @@ import {
 	Box,
 	ButtonBase,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import * as Yup from 'yup';
 
@@ -22,8 +21,8 @@ const validationSchema = Yup.object().shape({
 	password: Yup.string().required('Password is required'),
 });
 
-export default function LoginForm() {
-	const { loginGoogle, login } = useAuth();
+export default function SignupForm() {
+	const { loginGoogle, signup } = useAuth();
 	return (
 		<>
 			<Formik
@@ -31,7 +30,7 @@ export default function LoginForm() {
 				onSubmit={async (values, actions) => {
 					actions.setSubmitting(true);
 					try {
-						await login(values.email, values.password);
+						await signup(values.email, values.password);
 					} catch (error) {
 						if (error instanceof Error) {
 							actions.setStatus({ message: error.message });
@@ -120,7 +119,7 @@ export default function LoginForm() {
 									fullWidth
 									disabled={isSubmitting}
 								>
-									Log in
+									Sign up
 								</Button>
 								{status && status.message && (
 									<Typography
@@ -194,23 +193,8 @@ export default function LoginForm() {
 							d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
 						></path>
 					</svg>
-					<Typography>Log in with Google</Typography>
+					<Typography>Sign up with Google</Typography>
 				</ButtonBase>
-			</Box>
-			<Box
-				component="div"
-				sx={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
-			>
-				<Link
-					style={{ textDecoration: 'none', color: 'inherit' }}
-					to="/resetpassword"
-				>
-					Forgot password?
-				</Link>
 			</Box>
 		</>
 	);

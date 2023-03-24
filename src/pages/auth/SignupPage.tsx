@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import LoginForm from '../../components/LoginForm';
+import SignupForm from '../../components/SignupForm';
 
-export default function LoginPage() {
+export default function SignupPage() {
 	return (
 		<Container
 			sx={{
@@ -22,7 +22,7 @@ export default function LoginPage() {
 					border: '1px solid rgb(219, 219, 219)',
 				}}
 			>
-				<LoginForm />
+				<SignupForm />
 			</Box>
 			<Box
 				sx={{
@@ -33,12 +33,9 @@ export default function LoginPage() {
 				}}
 			>
 				<Typography textAlign={'center'}>
-					Don't have an account?{' '}
-					<Link
-						style={{ textDecoration: 'none', color: 'inherit' }}
-						to="/signup"
-					>
-						Sign up
+					Have an account?{' '}
+					<Link style={{ textDecoration: 'none', color: 'inherit' }} to="/">
+						Log in
 					</Link>
 				</Typography>
 			</Box>

@@ -13,8 +13,8 @@ export const ThemeContext = createContext<ThemeContextInterface>(
 	{} as ThemeContextInterface
 );
 
-export const ThemeProvider = ({ children }: ThemeProps) => {
-	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+export default function ThemeProvider({ children }: ThemeProps) {
+	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
 	const toggleTheme = () => {
 		const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -33,4 +33,4 @@ export const ThemeProvider = ({ children }: ThemeProps) => {
 	return (
 		<ThemeContext.Provider value={provider}>{children}</ThemeContext.Provider>
 	);
-};
+}

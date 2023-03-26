@@ -5,7 +5,7 @@ import {
 	ListItemIcon,
 	ListItemText,
 } from '@mui/material';
-import useTheme from '../../hooks/useTheme';
+import useTheme from '../../../hooks/useTheme';
 
 const textDisplay = {
 	xs: 'none',

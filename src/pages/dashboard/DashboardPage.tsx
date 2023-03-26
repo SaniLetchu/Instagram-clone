@@ -2,9 +2,9 @@ import React from 'react';
 import { Container, ButtonBase, Box } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
 import useTheme from '../../hooks/useTheme';
-import DrawerNavbar from '../../components/drawernavbar/DrawerNavbar';
-import TopNavbar from '../../components/topNavbar/TopNavbar';
-import BottomNavbar from '../../components/bottomnavbar/BottomNavbar';
+import DrawerNavbar from '../../components/navbars/drawer/DrawerNavbar';
+import TopNavbar from '../../components/navbars/top/TopNavbar';
+import BottomNavbar from '../../components/navbars/bottom/BottomNavbar';
 
 const flexDirection = {
 	xs: 'column',
@@ -12,6 +12,14 @@ const flexDirection = {
 	md: 'row',
 	lg: 'row',
 	xl: 'row',
+};
+
+const mainContainerTopMargin = {
+	xs: 7,
+	sm: 0,
+	md: 0,
+	lg: 0,
+	xl: 0,
 };
 
 export default function DashboardPage() {
@@ -35,7 +43,7 @@ export default function DashboardPage() {
 				disableGutters
 				sx={{
 					flexGrow: 1,
-					marginTop: 7,
+					marginTop: mainContainerTopMargin,
 					bgcolor: backgroundColor,
 				}}
 			>

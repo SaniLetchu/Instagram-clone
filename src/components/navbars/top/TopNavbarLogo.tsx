@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import useTheme from '../../hooks/useTheme';
+import useTheme from '../../../hooks/useTheme';
 
 export default function TopNavbarLogo() {
 	const { theme } = useTheme();

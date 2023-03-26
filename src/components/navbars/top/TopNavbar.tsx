@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Toolbar, AppBar } from '@mui/material';
 import TopNavbarLogo from './TopNavbarLogo';
-import useTheme from '../../hooks/useTheme';
+import useTheme from '../../../hooks/useTheme';
 import TopNavbarSearch from './TopNavbarSearch';
 
 const topNavbarDisplay = {

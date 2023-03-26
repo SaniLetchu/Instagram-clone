@@ -8,7 +8,7 @@ import {
 	AccountCircle,
 	Menu,
 } from '@mui/icons-material';
-import useTheme from '../../hooks/useTheme';
+import useTheme from '../../../hooks/useTheme';
 import DrawerButton from './DrawerButton';
 import DrawerLogo from './DrawerLogo';
 
@@ -24,6 +24,11 @@ const drawerDisplay = {
 export default function DrawerNavbar() {
 	const { theme } = useTheme();
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const boxShadow =
+		theme === 'dark'
+			? '1px 0px 1px rgba(250, 250, 250, 0.2)'
+			: '1px 0px 1px rgba(0, 0, 0, 0.2)';
+
 	return (
 		<Drawer
 			sx={{
@@ -32,6 +37,8 @@ export default function DrawerNavbar() {
 				'& .MuiDrawer-paper': {
 					width: drawerWidth,
 					boxSizing: 'border-box',
+					border: 'none',
+					boxShadow: boxShadow,
 				},
 				display: drawerDisplay,
 			}}

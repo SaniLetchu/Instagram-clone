@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import useTheme from '../../hooks/useTheme';
+import useTheme from '../../../hooks/useTheme';
 
 interface TopNavbarSearchProps {
 	onSearch(searchValue: string): void;

@@ -8,8 +8,7 @@ import {
 	Box,
 	ButtonBase,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import * as Yup from 'yup';
 
 const initialValues = {
@@ -22,8 +21,8 @@ const validationSchema = Yup.object().shape({
 	password: Yup.string().required('Password is required'),
 });
 
-export default function LoginForm() {
-	const { loginGoogle, login } = useAuth();
+export default function SignupForm() {
+	const { loginGoogle, signup } = useAuth();
 	return (
 		<>
 			<Formik
@@ -31,7 +30,7 @@ export default function LoginForm() {
 				onSubmit={async (values, actions) => {
 					actions.setSubmitting(true);
 					try {
-						await login(values.email, values.password);
+						await signup(values.email, values.password);
 					} catch (error) {
 						if (error instanceof Error) {
 							actions.setStatus({ message: error.message });
@@ -120,7 +119,7 @@ export default function LoginForm() {
 									fullWidth
 									disabled={isSubmitting}
 								>
-									Log in
+									Sign up
 								</Button>
 								{status && status.message && (
 									<Typography
@@ -196,21 +195,6 @@ export default function LoginForm() {
 					</svg>
 					<Typography>Log in with Google</Typography>
 				</ButtonBase>
-			</Box>
-			<Box
-				component="div"
-				sx={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
-			>
-				<Link
-					style={{ textDecoration: 'none', color: 'inherit' }}
-					to="/resetpassword"
-				>
-					Forgot password?
-				</Link>
 			</Box>
 		</>
 	);

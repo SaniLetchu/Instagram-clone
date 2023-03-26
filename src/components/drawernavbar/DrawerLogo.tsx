@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import useTheme from '../hooks/useTheme';
+import useTheme from '../../hooks/useTheme';
 import { Instagram } from '@mui/icons-material';
 
 const textDisplay = {
@@ -80,7 +80,7 @@ export default function DrawerLogo() {
 					justifyContent: 'center',
 				}}
 			>
-				<Instagram fontSize="large" sx={{ color: logoColor }} />
+				<Instagram fontSize="medium" sx={{ color: logoColor }} />
 			</Box>
 		</>
 	);

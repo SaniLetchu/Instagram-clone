@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Box } from '@mui/material';
-import PasswordResetForm from '../../components/PasswordResetForm';
+import PasswordResetForm from '../../components/auth/PasswordResetForm';
 
 export default function PasswordResetPage() {
 	return (

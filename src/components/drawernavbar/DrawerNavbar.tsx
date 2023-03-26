@@ -1,18 +1,25 @@
 import React from 'react';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
+import { List, Drawer, Box } from '@mui/material';
 import {
 	Home,
 	Search,
 	Send,
 	AddCircleOutline,
 	AccountCircle,
+	Menu,
 } from '@mui/icons-material';
-import useTheme from '../hooks/useTheme';
+import useTheme from '../../hooks/useTheme';
 import DrawerButton from './DrawerButton';
 import DrawerLogo from './DrawerLogo';
 
 const drawerWidth = { xs: 75, sm: 75, md: 75, lg: 245, xl: 245 };
+const drawerDisplay = {
+	xs: 'none',
+	sm: 'block',
+	md: 'block',
+	lg: 'block',
+	xl: 'block',
+};
 
 export default function DrawerNavbar() {
 	const { theme } = useTheme();
@@ -26,6 +33,7 @@ export default function DrawerNavbar() {
 					width: drawerWidth,
 					boxSizing: 'border-box',
 				},
+				display: drawerDisplay,
 			}}
 			variant="permanent"
 			anchor="left"
@@ -44,6 +52,8 @@ export default function DrawerNavbar() {
 				<DrawerButton IconComponent={Send} text="Messages" />
 				<DrawerButton IconComponent={AddCircleOutline} text="Create" />
 				<DrawerButton IconComponent={AccountCircle} text="Profile" />
+				<Box sx={{ flexGrow: 1 }} />
+				<DrawerButton IconComponent={Menu} text="More" />
 			</List>
 		</Drawer>
 	);

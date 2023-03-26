@@ -1,16 +1,17 @@
-import React from 'react';
-import { List, Drawer, Box } from '@mui/material';
+import React, { MouseEvent } from 'react';
+import { List, Drawer, Box, Menu, ButtonBase } from '@mui/material';
 import {
 	Home,
 	Search,
 	Send,
 	AddCircleOutline,
 	AccountCircle,
-	Menu,
+	Menu as MenuIcon,
 } from '@mui/icons-material';
 import useTheme from '../../../hooks/useTheme';
 import DrawerButton from './DrawerButton';
 import DrawerLogo from './DrawerLogo';
+import NavbarMenu from '../NavbarMenu';
 
 const drawerWidth = { xs: 75, sm: 75, md: 75, lg: 245, xl: 245 };
 const drawerDisplay = {
@@ -24,10 +25,19 @@ const drawerDisplay = {
 export default function DrawerNavbar() {
 	const { theme } = useTheme();
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 	const boxShadow =
 		theme === 'dark'
 			? '1px 0px 1px rgba(250, 250, 250, 0.2)'
 			: '1px 0px 1px rgba(0, 0, 0, 0.2)';
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	return (
 		<Drawer
@@ -60,7 +70,25 @@ export default function DrawerNavbar() {
 				<DrawerButton IconComponent={AddCircleOutline} text="Create" />
 				<DrawerButton IconComponent={AccountCircle} text="Profile" />
 				<Box sx={{ flexGrow: 1 }} />
-				<DrawerButton IconComponent={Menu} text="More" />
+				<ButtonBase onClick={handleClick}>
+					<DrawerButton IconComponent={MenuIcon} text="More" />
+				</ButtonBase>
+				<Menu
+					id="basic-menu"
+					anchorEl={anchorEl}
+					open={open}
+					onClose={handleClose}
+					MenuListProps={{
+						'aria-labelledby': 'basic-button',
+					}}
+					sx={{
+						'& .MuiPaper-root': {
+							backgroundColor: backgroundMenuColor,
+						},
+					}}
+				>
+					<NavbarMenu />
+				</Menu>
 			</List>
 		</Drawer>
 	);

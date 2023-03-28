@@ -10,7 +10,7 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 } from 'firebase/auth';
-import { auth } from '../utils/firebase';
+import { auth } from '../configs/firebase';
 
 interface AuthContextInterface {
 	user: FirebaseUser | null;

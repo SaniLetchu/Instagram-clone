@@ -1,12 +1,13 @@
-import React from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import React, { MouseEvent } from 'react';
+import { BottomNavigation, BottomNavigationAction, Menu } from '@mui/material';
 import {
 	Home,
 	Send,
 	AddCircleOutline,
 	AccountCircle,
-	Menu,
+	Menu as MenuIcon,
 } from '@mui/icons-material';
+import NavbarMenu from '../NavbarMenu';
 import useTheme from '../../../hooks/useTheme';
 
 const bottomNavbarDisplay = {
@@ -22,11 +23,20 @@ export default function BottomNavbar() {
 	const { theme } = useTheme();
 
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 	const iconColor = theme === 'dark' ? 'white' : 'black';
 	const boxShadow =
 		theme === 'dark'
 			? '0px -1px 1px rgba(250, 250, 250, 0.2)'
 			: '0px -1px 1px rgba(0, 0, 0, 0.2)';
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	return (
 		<BottomNavigation
@@ -87,8 +97,25 @@ export default function BottomNavbar() {
 						color: iconColor,
 					},
 				}}
-				icon={<Menu />}
+				onClick={handleClick}
+				icon={<MenuIcon />}
 			/>
+			<Menu
+				id="basic-menu"
+				anchorEl={anchorEl}
+				open={open}
+				onClose={handleClose}
+				MenuListProps={{
+					'aria-labelledby': 'basic-button',
+				}}
+				sx={{
+					'& .MuiPaper-root': {
+						backgroundColor: backgroundMenuColor,
+					},
+				}}
+			>
+				<NavbarMenu />
+			</Menu>
 		</BottomNavigation>
 	);
 }

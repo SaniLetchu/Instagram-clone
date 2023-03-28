@@ -1,10 +1,12 @@
 import React from 'react';
-import { Container, ButtonBase, Box } from '@mui/material';
-import useAuth from '../../hooks/useAuth';
+import { Container } from '@mui/material';
+import { Routes, Route, Link } from 'react-router-dom';
 import useTheme from '../../hooks/useTheme';
 import DrawerNavbar from '../../components/navbars/drawer/DrawerNavbar';
 import TopNavbar from '../../components/navbars/top/TopNavbar';
 import BottomNavbar from '../../components/navbars/bottom/BottomNavbar';
+import HomePage from '../HomePage';
+import UsernameModal from '../../components/UsernameModal';
 
 const flexDirection = {
 	xs: 'column',
@@ -23,8 +25,7 @@ const mainContainerTopMargin = {
 };
 
 export default function DashboardPage() {
-	const { logout } = useAuth();
-	const { theme, toggleTheme } = useTheme();
+	const { theme } = useTheme();
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
 	return (
 		<Container
@@ -36,6 +37,7 @@ export default function DashboardPage() {
 				bgcolor: backgroundColor,
 			}}
 		>
+			<UsernameModal />
 			<DrawerNavbar />
 			<TopNavbar />
 			<Container
@@ -43,12 +45,14 @@ export default function DashboardPage() {
 				disableGutters
 				sx={{
 					flexGrow: 1,
+					minHeight: '100vh',
 					marginTop: mainContainerTopMargin,
 					bgcolor: backgroundColor,
 				}}
 			>
-				<ButtonBase onClick={logout}>logout</ButtonBase>
-				<ButtonBase onClick={toggleTheme}>theme</ButtonBase>
+				<Routes>
+					<Route path="/:topicId" Component={HomePage}></Route>
+				</Routes>
 			</Container>
 			<BottomNavbar />
 		</Container>

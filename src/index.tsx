@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import RootRoute from './routes';
 import AuthProvider from './context/AuthContext';
 import ThemeProvider from './context/ThemeContext';
+import UserProvider from './context/UserContext';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
@@ -11,11 +12,13 @@ const root = ReactDOM.createRoot(
 root.render(
 	<React.StrictMode>
 		<AuthProvider>
-			<ThemeProvider>
-				<Router basename="/Instagram-clone">
-					<RootRoute />
-				</Router>
-			</ThemeProvider>
+			<UserProvider>
+				<ThemeProvider>
+					<Router basename="/Instagram-clone">
+						<RootRoute />
+					</Router>
+				</ThemeProvider>
+			</UserProvider>
 		</AuthProvider>
 	</React.StrictMode>
 );

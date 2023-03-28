@@ -11,7 +11,7 @@ export default function UserRoute() {
 
 	return (
 		<Routes>
-			<Route path="/" Component={DashboardPage} />
+			<Route path="/*" Component={DashboardPage} />
 		</Routes>
 	);
 }

@@ -12,6 +12,7 @@ import useTheme from '../../../hooks/useTheme';
 import DrawerButton from './DrawerButton';
 import DrawerLogo from './DrawerLogo';
 import NavbarMenu from '../NavbarMenu';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = { xs: 75, sm: 75, md: 75, lg: 245, xl: 245 };
 const drawerDisplay = {
@@ -24,6 +25,7 @@ const drawerDisplay = {
 
 export default function DrawerNavbar() {
 	const { theme } = useTheme();
+	const navigate = useNavigate();
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
 	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 	const boxShadow =
@@ -64,13 +66,81 @@ export default function DrawerNavbar() {
 					flexGrow: 1,
 				}}
 			>
-				<DrawerButton IconComponent={Home} text="Home" />
-				<DrawerButton IconComponent={Search} text="Search" />
-				<DrawerButton IconComponent={Send} text="Messages" />
-				<DrawerButton IconComponent={AddCircleOutline} text="Create" />
-				<DrawerButton IconComponent={AccountCircle} text="Profile" />
+				<ButtonBase
+					sx={{
+						borderRadius: 100,
+						'&:hover': {
+							backgroundColor:
+								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
+						},
+					}}
+					onClick={() => navigate('/')}
+				>
+					<DrawerButton IconComponent={Home} text="Home" path="/" />
+				</ButtonBase>
+				<ButtonBase
+					sx={{
+						borderRadius: 100,
+						'&:hover': {
+							backgroundColor:
+								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
+						},
+					}}
+					onClick={() => console.log('search')}
+				>
+					<DrawerButton IconComponent={Search} text="Search" />
+				</ButtonBase>
+				<ButtonBase
+					sx={{
+						borderRadius: 100,
+						'&:hover': {
+							backgroundColor:
+								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
+						},
+					}}
+					onClick={() => navigate('/messages')}
+				>
+					<DrawerButton IconComponent={Send} text="Messages" path="/messages" />
+				</ButtonBase>
+				<ButtonBase
+					sx={{
+						borderRadius: 100,
+						'&:hover': {
+							backgroundColor:
+								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
+						},
+					}}
+					onClick={() => console.log('messages')}
+				>
+					<DrawerButton IconComponent={AddCircleOutline} text="Create" />
+				</ButtonBase>
+				<ButtonBase
+					sx={{
+						borderRadius: 100,
+						'&:hover': {
+							backgroundColor:
+								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
+						},
+					}}
+					onClick={() => navigate('/profile')}
+				>
+					<DrawerButton
+						IconComponent={AccountCircle}
+						text="Profile"
+						path="/profile"
+					/>
+				</ButtonBase>
 				<Box sx={{ flexGrow: 1 }} />
-				<ButtonBase onClick={handleClick}>
+				<ButtonBase
+					sx={{
+						borderRadius: 100,
+						'&:hover': {
+							backgroundColor:
+								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
+						},
+					}}
+					onClick={handleClick}
+				>
 					<DrawerButton IconComponent={MenuIcon} text="More" />
 				</ButtonBase>
 				<Menu
@@ -78,6 +148,7 @@ export default function DrawerNavbar() {
 					anchorEl={anchorEl}
 					open={open}
 					onClose={handleClose}
+					disableScrollLock={true}
 					MenuListProps={{
 						'aria-labelledby': 'basic-button',
 					}}

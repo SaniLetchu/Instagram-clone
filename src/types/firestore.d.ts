@@ -3,9 +3,9 @@ import { DocumentReference, Timestamp } from 'firebase/firestore';
 export type User = {
 	username: string;
 	email: string;
-	fullName: string;
-	profileImageUrl: string | null;
+	profileImageUrl: string | null | undefined;
 	bio: string;
+	postCount: number;
 	followersCount: number;
 	followingCount: number;
 };

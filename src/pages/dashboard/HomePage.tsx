@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import useTheme from '../hooks/useTheme';
+import useTheme from '../../hooks/useTheme';
 
 export default function HomePage() {
 	const { theme } = useTheme();
@@ -15,7 +15,7 @@ export default function HomePage() {
 				justifyContent: 'center',
 			}}
 		>
-			xD
+			home
 		</Container>
 	);
 }

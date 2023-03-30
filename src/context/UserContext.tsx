@@ -2,16 +2,10 @@ import React, { createContext, useMemo, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import { firestore } from '../configs/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
-
-interface UserData {
-	// Define the shape of the user data here
-	name: string;
-	email: string;
-	// ...
-}
+import { User } from '../types/firestore';
 
 interface UserContextInterface {
-	userData: UserData | null;
+	userData: User | null;
 	isNewAccount: boolean;
 }
 
@@ -25,18 +19,18 @@ export const UserContext = createContext<UserContextInterface>(
 
 const listenToUser = (
 	userId: string,
-	setUser: (user: UserData | null) => void,
+	setUser: (user: User | null) => void,
 	setIsNewAccount: (isNewAccount: boolean) => void
 ) => {
 	return onSnapshot(doc(firestore, 'users', userId), (document) => {
-		setUser(document.exists() ? (document.data() as UserData) : null);
+		setUser(document.exists() ? (document.data() as User) : null);
 		setIsNewAccount(document.exists() ? false : true);
 	});
 };
 
 export default function UserProvider({ children }: UserProps) {
 	const { user } = useAuth();
-	const [userData, setUserData] = useState<UserData | null>(null);
+	const [userData, setUserData] = useState<User | null>(null);
 	const [isNewAccount, setIsNewAccount] = useState<boolean>(false);
 
 	useEffect(() => {

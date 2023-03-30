@@ -6,6 +6,7 @@ import {
 	ListItemText,
 } from '@mui/material';
 import useTheme from '../../../hooks/useTheme';
+import { useLocation } from 'react-router-dom';
 
 const textDisplay = {
 	xs: 'none',
@@ -26,14 +27,19 @@ const buttonDisplay = {
 interface DrawerButtonProps {
 	IconComponent: React.ElementType;
 	text: string;
+	path?: string;
 }
 
 export default function DrawerButton({
 	IconComponent,
 	text,
+	path,
 }: DrawerButtonProps) {
 	const { theme } = useTheme();
+	const { pathname } = useLocation();
 	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
+	const fillIconColor =
+		pathname === path ? (theme === 'dark' ? 'white' : 'black') : 'none';
 	return (
 		<ListItem
 			key={text}
@@ -63,7 +69,9 @@ export default function DrawerButton({
 						fontSize="large"
 						sx={{
 							px: 1.3,
-							color: textAndIconColor,
+							stroke: textAndIconColor,
+							strokeWidth: 1,
+							fill: fillIconColor,
 						}}
 					/>
 				</ListItemIcon>

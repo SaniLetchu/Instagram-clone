@@ -1,14 +1,9 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import {
-	Button,
-	TextField,
-	Grid,
-	Typography,
-	Box,
-	ButtonBase,
-} from '@mui/material';
+import { Button, TextField, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { isUsernameAvailable, createUserDocument } from '../services/firestore';
+import useAuth from '../hooks/useAuth';
 import * as Yup from 'yup';
 
 const initialValues = {
@@ -16,16 +11,32 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object().shape({
-	username: Yup.string().length(4),
+	username: Yup.string()
+		.min(4, 'Username must be atleast 4 characters')
+		.required(),
 });
 
 export default function UsernameForm() {
+	const { user } = useAuth();
 	return (
 		<Formik
 			initialValues={initialValues}
 			onSubmit={async (values, actions) => {
 				actions.setSubmitting(true);
-
+				const usernameAvailable = await isUsernameAvailable(values.username);
+				if (usernameAvailable) {
+					const success = await createUserDocument(
+						values.username.toLowerCase(),
+						user?.email ?? '',
+						user?.uid ?? '',
+						user?.photoURL ?? ''
+					);
+					if (!success) {
+						actions.setStatus({ message: 'Error creating user document' });
+					}
+				} else {
+					actions.setStatus({ message: 'Username not available' });
+				}
 				actions.setSubmitting(false);
 			}}
 			validationSchema={validationSchema}
@@ -54,7 +65,7 @@ export default function UsernameForm() {
 								<Typography
 									sx={{ color: 'red', textAlign: 'center', fontSize: 12 }}
 								>
-									<ErrorMessage name="email" />
+									<ErrorMessage name="username" />
 								</Typography>
 							)}
 						</Grid>

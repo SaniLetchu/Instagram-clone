@@ -5,7 +5,10 @@ import useTheme from '../../hooks/useTheme';
 import DrawerNavbar from '../../components/navbars/drawer/DrawerNavbar';
 import TopNavbar from '../../components/navbars/top/TopNavbar';
 import BottomNavbar from '../../components/navbars/bottom/BottomNavbar';
-import HomePage from '../HomePage';
+import HomePage from './HomePage';
+import MessagesPage from './MessagesPage';
+import ProfilePage from './ProfilePage';
+import SettingsPage from './SettingsPage';
 import UsernameModal from '../../components/UsernameModal';
 
 const flexDirection = {
@@ -51,7 +54,10 @@ export default function DashboardPage() {
 				}}
 			>
 				<Routes>
-					<Route path="/:topicId" Component={HomePage}></Route>
+					<Route path="/" Component={HomePage}></Route>
+					<Route path="/profile" Component={ProfilePage}></Route>
+					<Route path="/settings" Component={SettingsPage}></Route>
+					<Route path="/messages" Component={MessagesPage}></Route>
 				</Routes>
 			</Container>
 			<BottomNavbar />

@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import NavbarMenu from '../NavbarMenu';
 import useTheme from '../../../hooks/useTheme';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const bottomNavbarDisplay = {
 	xs: 'flex',
@@ -20,9 +21,14 @@ const bottomNavbarDisplay = {
 
 export default function BottomNavbar() {
 	const [value, setValue] = React.useState(0);
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
 	const { theme } = useTheme();
 
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	function fillIconColor(path: string) {
+		return pathname === path ? (theme === 'dark' ? 'white' : 'black') : 'none';
+	}
 	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 	const iconColor = theme === 'dark' ? 'white' : 'black';
 	const boxShadow =
@@ -55,13 +61,40 @@ export default function BottomNavbar() {
 			}}
 		>
 			<BottomNavigationAction
+				onClick={() => navigate('/')}
 				sx={{
 					color: iconColor,
 					'&.Mui-selected': {
 						color: iconColor,
 					},
 				}}
-				icon={<Home />}
+				icon={
+					<Home
+						sx={{
+							stroke: iconColor,
+							strokeWidth: 1,
+							fill: fillIconColor('/'),
+						}}
+					/>
+				}
+			/>
+			<BottomNavigationAction
+				onClick={() => navigate('/messages')}
+				sx={{
+					color: iconColor,
+					'&.Mui-selected': {
+						color: iconColor,
+					},
+				}}
+				icon={
+					<Send
+						sx={{
+							stroke: iconColor,
+							strokeWidth: 1,
+							fill: fillIconColor('/messages'),
+						}}
+					/>
+				}
 			/>
 			<BottomNavigationAction
 				sx={{
@@ -70,25 +103,33 @@ export default function BottomNavbar() {
 						color: iconColor,
 					},
 				}}
-				icon={<Send />}
+				icon={
+					<AddCircleOutline
+						sx={{
+							stroke: iconColor,
+							strokeWidth: 1,
+							fill: fillIconColor('asdasdas'),
+						}}
+					/>
+				}
 			/>
 			<BottomNavigationAction
+				onClick={() => navigate('/profile')}
 				sx={{
 					color: iconColor,
 					'&.Mui-selected': {
 						color: iconColor,
 					},
 				}}
-				icon={<AddCircleOutline />}
-			/>
-			<BottomNavigationAction
-				sx={{
-					color: iconColor,
-					'&.Mui-selected': {
-						color: iconColor,
-					},
-				}}
-				icon={<AccountCircle />}
+				icon={
+					<AccountCircle
+						sx={{
+							stroke: iconColor,
+							strokeWidth: 1,
+							fill: fillIconColor('/profile'),
+						}}
+					/>
+				}
 			/>
 			<BottomNavigationAction
 				sx={{
@@ -105,6 +146,7 @@ export default function BottomNavbar() {
 				anchorEl={anchorEl}
 				open={open}
 				onClose={handleClose}
+				disableScrollLock={true}
 				MenuListProps={{
 					'aria-labelledby': 'basic-button',
 				}}

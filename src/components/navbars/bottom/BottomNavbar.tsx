@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import NavbarMenu from '../NavbarMenu';
 import useTheme from '../../../hooks/useTheme';
+import useDashboard from '../../../hooks/useDashboard';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const bottomNavbarDisplay = {
@@ -24,10 +25,15 @@ export default function BottomNavbar() {
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const { theme } = useTheme();
+	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
 
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
-	function fillIconColor(path: string) {
-		return pathname === path ? (theme === 'dark' ? 'white' : 'black') : 'none';
+	function fillIconColor(path: string, selectionBoolean = false) {
+		return pathname === path || selectionBoolean
+			? theme === 'dark'
+				? 'white'
+				: 'black'
+			: 'none';
 	}
 	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 	const iconColor = theme === 'dark' ? 'white' : 'black';
@@ -97,6 +103,7 @@ export default function BottomNavbar() {
 				}
 			/>
 			<BottomNavigationAction
+				onClick={() => setOpenCreatePostModal(true)}
 				sx={{
 					color: iconColor,
 					'&.Mui-selected': {
@@ -108,7 +115,7 @@ export default function BottomNavbar() {
 						sx={{
 							stroke: iconColor,
 							strokeWidth: 1,
-							fill: fillIconColor('asdasdas'),
+							fill: fillIconColor('asdasdas', openCreatePostModal),
 						}}
 					/>
 				}
@@ -139,7 +146,15 @@ export default function BottomNavbar() {
 					},
 				}}
 				onClick={handleClick}
-				icon={<MenuIcon />}
+				icon={
+					<MenuIcon
+						sx={{
+							stroke: iconColor,
+							strokeWidth: 1,
+							fill: fillIconColor('/emptynever', open),
+						}}
+					/>
+				}
 			/>
 			<Menu
 				id="basic-menu"

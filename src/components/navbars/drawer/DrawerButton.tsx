@@ -28,18 +28,24 @@ interface DrawerButtonProps {
 	IconComponent: React.ElementType;
 	text: string;
 	path?: string;
+	selectionBoolean?: boolean;
 }
 
 export default function DrawerButton({
 	IconComponent,
 	text,
 	path,
+	selectionBoolean,
 }: DrawerButtonProps) {
 	const { theme } = useTheme();
 	const { pathname } = useLocation();
 	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
 	const fillIconColor =
-		pathname === path ? (theme === 'dark' ? 'white' : 'black') : 'none';
+		pathname === path || selectionBoolean
+			? theme === 'dark'
+				? 'white'
+				: 'black'
+			: 'none';
 	return (
 		<ListItem
 			key={text}

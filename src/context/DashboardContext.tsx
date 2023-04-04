@@ -1,8 +1,8 @@
 import React, { createContext, useMemo, useState } from 'react';
 
 interface DashboardContextInterface {
-	page: string;
-	setPage: React.Dispatch<React.SetStateAction<string>>;
+	openCreatePostModal: boolean;
+	setOpenCreatePostModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface DashboardProps {
@@ -14,14 +14,14 @@ export const DashboardContext = createContext<DashboardContextInterface>(
 );
 
 export default function DashboardProvider({ children }: DashboardProps) {
-	const [page, setPage] = useState('home');
+	const [openCreatePostModal, setOpenCreatePostModal] = useState(false);
 
 	const provider = useMemo(
 		() => ({
-			page,
-			setPage,
+			openCreatePostModal,
+			setOpenCreatePostModal,
 		}),
-		[page]
+		[openCreatePostModal]
 	);
 
 	return (

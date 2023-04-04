@@ -10,6 +10,8 @@ import MessagesPage from './MessagesPage';
 import ProfilePage from './ProfilePage';
 import SettingsPage from './SettingsPage';
 import UsernameModal from '../../components/UsernameModal';
+import CreatePostModal from '../../components/CreatePostModal';
+import { Create } from '@mui/icons-material';
 
 const flexDirection = {
 	xs: 'column',
@@ -40,6 +42,7 @@ export default function DashboardPage() {
 				bgcolor: backgroundColor,
 			}}
 		>
+			<CreatePostModal />
 			<UsernameModal />
 			<DrawerNavbar />
 			<TopNavbar />

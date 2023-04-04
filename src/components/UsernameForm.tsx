@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Button, TextField, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
 import { isUsernameAvailable, createUserDocument } from '../services/firestore';
 import useAuth from '../hooks/useAuth';
 import * as Yup from 'yup';

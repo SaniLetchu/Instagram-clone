@@ -1,4 +1,4 @@
-import { firestore } from '../configs/firebase';
+import { firestore, storage } from '../configs/firebase';
 import {
 	doc,
 	updateDoc,
@@ -10,8 +10,11 @@ import {
 	setDoc,
 	query,
 	getDocs,
+	serverTimestamp,
+	Timestamp,
 } from 'firebase/firestore';
-import { User } from '../types/firestore';
+import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import { Post, User } from '../types/firestore';
 
 const usersRef = collection(firestore, 'users');
 const postsRef = collection(firestore, 'posts');
@@ -54,6 +57,43 @@ export async function createUserDocument(
 		return true;
 	} catch (error) {
 		console.error('Error creating user document:', error);
+		return false;
+	}
+}
+
+export async function createPost(caption: string, image: File, userId: string) {
+	function generateRandomString(length: number) {
+		const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+		let result = '';
+
+		for (let i = 0; i < length; i++) {
+			result += characters.charAt(
+				Math.floor(Math.random() * characters.length)
+			);
+		}
+
+		return result;
+	}
+	try {
+		const extension = image.name.split('.').pop();
+		const randomName = generateRandomString(16);
+		const storageRef = ref(storage, `posts/${randomName}.${extension}`);
+		const snapshot = await uploadBytes(storageRef, image);
+
+		const url = await getDownloadURL(snapshot.ref);
+
+		const newPost: Post = {
+			caption,
+			imageUrl: url,
+			userId,
+			timestamp: serverTimestamp() as Timestamp,
+			likesCount: 0,
+			commentsCount: 0,
+		};
+		await addDoc(postsRef, newPost);
+		return true;
+	} catch (error) {
+		console.error('Error creating post:', error);
 		return false;
 	}
 }

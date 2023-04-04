@@ -9,6 +9,7 @@ import {
 	Menu as MenuIcon,
 } from '@mui/icons-material';
 import useTheme from '../../../hooks/useTheme';
+import useDashboard from '../../../hooks/useDashboard';
 import DrawerButton from './DrawerButton';
 import DrawerLogo from './DrawerLogo';
 import NavbarMenu from '../NavbarMenu';
@@ -25,6 +26,7 @@ const drawerDisplay = {
 
 export default function DrawerNavbar() {
 	const { theme } = useTheme();
+	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
 	const navigate = useNavigate();
 	const backgroundColor = theme === 'dark' ? 'black' : 'white';
 	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
@@ -110,9 +112,13 @@ export default function DrawerNavbar() {
 								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
 						},
 					}}
-					onClick={() => console.log('messages')}
+					onClick={() => setOpenCreatePostModal(true)}
 				>
-					<DrawerButton IconComponent={AddCircleOutline} text="Create" />
+					<DrawerButton
+						IconComponent={AddCircleOutline}
+						text="Create"
+						selectionBoolean={openCreatePostModal}
+					/>
 				</ButtonBase>
 				<ButtonBase
 					sx={{
@@ -141,7 +147,11 @@ export default function DrawerNavbar() {
 					}}
 					onClick={handleClick}
 				>
-					<DrawerButton IconComponent={MenuIcon} text="More" />
+					<DrawerButton
+						IconComponent={MenuIcon}
+						text="More"
+						selectionBoolean={open}
+					/>
 				</ButtonBase>
 				<Menu
 					id="basic-menu"

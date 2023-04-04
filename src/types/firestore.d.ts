@@ -1,4 +1,4 @@
-import { DocumentReference, Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 export type User = {
 	username: string;
@@ -11,7 +11,7 @@ export type User = {
 };
 
 export type Post = {
-	userId: DocumentReference;
+	userId: string;
 	imageUrl: string;
 	caption: string;
 	timestamp: Timestamp;
@@ -20,32 +20,32 @@ export type Post = {
 };
 
 export type Like = {
-	userId: DocumentReference;
-	postId: DocumentReference;
+	userId: string;
+	postId: string;
 };
 
 export type Comment = {
-	userId: DocumentReference;
-	postId: DocumentReference;
+	userId: string;
+	postId: string;
 	text: string;
 	timestamp: Timestamp;
 };
 
 export type Message = {
-	senderId: DocumentReference;
-	recipientId: DocumentReference;
+	senderId: string;
+	recipientId: string;
 	text: string;
 	timestamp: Timestamp;
 };
 
 //User has follower
 export type Follower = {
-	userId: DocumentReference;
-	followerUserId: DocumentReference;
+	userId: string;
+	followerUserId: string;
 };
 
 //User is following
 export type Following = {
-	userId: DocumentReference;
-	followingUserId: DocumentReference;
+	userId: string;
+	followingUserId: string;
 };

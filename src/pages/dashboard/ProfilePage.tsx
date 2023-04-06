@@ -2,14 +2,11 @@ import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import useTheme from '../../hooks/useTheme';
 import useUser from '../../hooks/useUser';
+import { AccountCircle } from '@mui/icons-material';
 
 export default function ProfilePage() {
-	const { theme } = useTheme();
+	const { backgroundColor, textAndIconColor, borderColor } = useTheme();
 	const { userData } = useUser();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
-	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
-	const borderColor =
-		theme === 'dark' ? 'rgba(250, 250, 250, 0.2)' : 'rgba(0, 0, 0, 0.2)';
 	return (
 		<Container
 			maxWidth={false}
@@ -23,17 +20,34 @@ export default function ProfilePage() {
 				gap: 2,
 			}}
 		>
-			<img
-				style={{
-					width: 150,
-					height: 150,
-					borderRadius: 100,
-					boxShadow: `0 0 10px 2px ${textAndIconColor}`,
-				}}
-				src={userData?.profileImageUrl as string}
-			/>
+			{userData?.profileImageUrl && (
+				<img
+					style={{
+						width: 150,
+						height: 150,
+						borderRadius: 100,
+						boxShadow: `0 0 10px 2px ${textAndIconColor}`,
+						objectFit: 'cover',
+					}}
+					src={userData?.profileImageUrl as string}
+				/>
+			)}
+			{!userData?.profileImageUrl && (
+				<AccountCircle
+					fontSize="large"
+					sx={{
+						width: 150,
+						height: 150,
+						borderRadius: 100,
+						color: textAndIconColor,
+					}}
+				/>
+			)}
 			<Typography variant="h4" sx={{ color: textAndIconColor }}>
 				{userData?.username as string}
+			</Typography>
+			<Typography variant="subtitle2" sx={{ color: textAndIconColor }}>
+				{userData?.bio as string}
 			</Typography>
 			<Box
 				sx={{

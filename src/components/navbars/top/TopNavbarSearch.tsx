@@ -9,13 +9,7 @@ interface TopNavbarSearchProps {
 
 export default function TopNavbarSearch({ onSearch }: TopNavbarSearchProps) {
 	const [searchValue, setSearchValue] = useState('');
-	const { theme } = useTheme();
-
-	const backgroundColor =
-		theme === 'dark' ? 'rgb(38, 38, 38)' : 'rgb(239, 239, 239)';
-	const textAndIconColor =
-		theme === 'dark' ? 'rgb(142, 142, 142)' : 'rgb(142, 142, 142)';
-	const textColor = theme === 'dark' ? 'white' : 'black';
+	const { reverseTextAndIconColor, textInputBackgroundColor } = useTheme();
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(event.target.value);
@@ -46,17 +40,20 @@ export default function TopNavbarSearch({ onSearch }: TopNavbarSearchProps) {
 				sx={{
 					mr: 1,
 					borderRadius: 2,
-					bgcolor: backgroundColor,
+					bgcolor: textInputBackgroundColor,
 					input: {
-						color: textColor,
+						color: reverseTextAndIconColor,
 						'&::placeholder': {
-							color: textAndIconColor,
+							color: 'rgb(142, 142, 142)',
 						},
 					},
 				}}
 				InputProps={{
 					startAdornment: (
-						<IconButton type="submit" sx={{ pl: 2, color: textAndIconColor }}>
+						<IconButton
+							type="submit"
+							sx={{ pl: 2, color: 'rgb(142, 142, 142)' }}
+						>
 							<SearchIcon fontSize="small" />
 						</IconButton>
 					),

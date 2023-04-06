@@ -3,8 +3,7 @@ import { Box } from '@mui/material';
 import useTheme from '../../../hooks/useTheme';
 
 export default function TopNavbarLogo() {
-	const { theme } = useTheme();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const { theme, backgroundColor } = useTheme();
 	return (
 		<Box
 			sx={{

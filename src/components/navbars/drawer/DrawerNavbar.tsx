@@ -25,11 +25,9 @@ const drawerDisplay = {
 };
 
 export default function DrawerNavbar() {
-	const { theme } = useTheme();
+	const { theme, backgroundColor, secondaryBackgroundColor } = useTheme();
 	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
 	const navigate = useNavigate();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
-	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 	const boxShadow =
 		theme === 'dark'
 			? '1px 0px 1px rgba(250, 250, 250, 0.2)'
@@ -164,7 +162,7 @@ export default function DrawerNavbar() {
 					}}
 					sx={{
 						'& .MuiPaper-root': {
-							backgroundColor: backgroundMenuColor,
+							backgroundColor: secondaryBackgroundColor,
 						},
 					}}
 				>

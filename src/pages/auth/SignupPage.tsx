@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import SignupForm from '../../components/auth/SignupForm';
+import SignupForm from '../../components/forms/SignupForm';
 
 export default function SignupPage() {
 	return (

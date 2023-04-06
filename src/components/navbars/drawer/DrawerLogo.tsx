@@ -20,9 +20,7 @@ const logoDisplay = {
 };
 
 export default function DrawerLogo() {
-	const { theme } = useTheme();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
-	const logoColor = theme === 'dark' ? 'white' : 'black';
+	const { backgroundColor, textAndIconColor, theme } = useTheme();
 	return (
 		<>
 			<Box
@@ -80,7 +78,7 @@ export default function DrawerLogo() {
 					justifyContent: 'center',
 				}}
 			>
-				<Instagram fontSize="medium" sx={{ color: logoColor }} />
+				<Instagram fontSize="medium" sx={{ color: textAndIconColor }} />
 			</Box>
 		</>
 	);

@@ -18,8 +18,7 @@ const handleSearch = (searchValue: string) => {
 };
 
 export default function TopNavbar() {
-	const { theme } = useTheme();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const { theme, backgroundColor } = useTheme();
 	const boxShadow =
 		theme === 'dark'
 			? '0px 1px 1px rgba(250, 250, 250, 0.2)'

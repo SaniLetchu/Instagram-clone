@@ -8,9 +8,7 @@ interface ButtonProps {
 }
 
 export default function Button({ text, disabled }: ButtonProps) {
-	const { theme } = useTheme();
-	const backgroundColor = theme === 'dark' ? 'white' : 'rgb(38, 38, 38)';
-	const textAndIconColor = theme === 'dark' ? 'black' : 'white';
+	const { buttonBackgroundColor, reverseTextAndIconColor } = useTheme();
 	return (
 		<ButtonBase
 			type="submit"
@@ -19,7 +17,7 @@ export default function Button({ text, disabled }: ButtonProps) {
 				px: 2,
 				py: 0.5,
 				display: 'flex',
-				bgcolor: backgroundColor,
+				bgcolor: buttonBackgroundColor,
 				justifyContent: 'center',
 				alignItems: 'center',
 				borderRadius: 3.5,
@@ -27,7 +25,7 @@ export default function Button({ text, disabled }: ButtonProps) {
 		>
 			<Typography
 				sx={{
-					color: textAndIconColor,
+					color: reverseTextAndIconColor,
 				}}
 			>
 				{text}

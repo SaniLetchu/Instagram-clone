@@ -3,8 +3,7 @@ import { Container } from '@mui/material';
 import useTheme from '../../hooks/useTheme';
 
 export default function MessagesPage() {
-	const { theme } = useTheme();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const { backgroundColor } = useTheme();
 	return (
 		<Container
 			maxWidth={false}

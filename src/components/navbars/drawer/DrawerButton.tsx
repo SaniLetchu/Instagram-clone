@@ -37,9 +37,8 @@ export default function DrawerButton({
 	path,
 	selectionBoolean,
 }: DrawerButtonProps) {
-	const { theme } = useTheme();
+	const { textAndIconColor, theme } = useTheme();
 	const { pathname } = useLocation();
-	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
 	const fillIconColor =
 		pathname === path || selectionBoolean
 			? theme === 'dark'

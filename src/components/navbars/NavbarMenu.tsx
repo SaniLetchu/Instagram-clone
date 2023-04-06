@@ -13,14 +13,15 @@ import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavbarMenu() {
-	const { theme, toggleTheme } = useTheme();
+	const { secondaryBackgroundColor, textAndIconColor, toggleTheme } =
+		useTheme();
 	const { logout } = useAuth();
 	const navigate = useNavigate();
-	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
-	const backgroundColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 
 	return (
-		<Paper sx={{ width: 320, maxWidth: '100%', bgcolor: backgroundColor }}>
+		<Paper
+			sx={{ width: 320, maxWidth: '100%', bgcolor: secondaryBackgroundColor }}
+		>
 			<MenuList>
 				<MenuItem onClick={() => navigate('/settings')}>
 					<ListItemText sx={{ color: textAndIconColor }}>Settings</ListItemText>

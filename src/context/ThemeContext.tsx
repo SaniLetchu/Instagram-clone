@@ -3,6 +3,13 @@ import React, { createContext, useMemo, useState } from 'react';
 interface ThemeContextInterface {
 	theme: string;
 	toggleTheme(): void;
+	textAndIconColor: string;
+	secondaryBackgroundColor: string;
+	borderColor: string;
+	buttonBackgroundColor: string;
+	reverseTextAndIconColor: string;
+	backgroundColor: string;
+	textInputBackgroundColor: string;
 }
 
 interface ThemeProps {
@@ -22,10 +29,30 @@ export default function ThemeProvider({ children }: ThemeProps) {
 		localStorage.setItem('theme', newTheme);
 	};
 
+	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const secondaryBackgroundColor =
+		theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
+	const buttonBackgroundColor = theme === 'dark' ? 'white' : 'rgb(38, 38, 38)';
+	const textInputBackgroundColor =
+		theme === 'dark' ? 'rgb(38, 38, 38)' : 'rgb(239, 239, 239)';
+
+	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
+	const reverseTextAndIconColor = theme === 'dark' ? 'black' : 'white';
+
+	const borderColor =
+		theme === 'dark' ? 'rgba(250, 250, 250, 0.2)' : 'rgba(0, 0, 0, 0.2)';
+
 	const provider = useMemo(
 		() => ({
 			toggleTheme,
 			theme,
+			textAndIconColor,
+			borderColor,
+			secondaryBackgroundColor,
+			buttonBackgroundColor,
+			reverseTextAndIconColor,
+			backgroundColor,
+			textInputBackgroundColor,
 		}),
 		[theme]
 	);

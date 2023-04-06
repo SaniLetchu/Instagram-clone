@@ -9,9 +9,8 @@ import HomePage from './HomePage';
 import MessagesPage from './MessagesPage';
 import ProfilePage from './ProfilePage';
 import SettingsPage from './SettingsPage';
-import UsernameModal from '../../components/UsernameModal';
-import CreatePostModal from '../../components/CreatePostModal';
-import { Create } from '@mui/icons-material';
+import UsernameModal from '../../components/modals/UsernameModal';
+import CreatePostModal from '../../components/modals/CreatePostModal';
 
 const flexDirection = {
 	xs: 'column',
@@ -30,8 +29,7 @@ const mainContainerTopMargin = {
 };
 
 export default function DashboardPage() {
-	const { theme } = useTheme();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const { backgroundColor } = useTheme();
 	return (
 		<Container
 			maxWidth={false}

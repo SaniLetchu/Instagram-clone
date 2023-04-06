@@ -1,8 +1,8 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Button, TextField, Grid, Typography } from '@mui/material';
-import { isUsernameAvailable, createUserDocument } from '../services/firestore';
-import useAuth from '../hooks/useAuth';
+import { isUsernameAvailable, createUserDocument } from '../../services/firestore';
+import useAuth from '../../hooks/useAuth';
 import * as Yup from 'yup';
 
 const initialValues = {

@@ -24,10 +24,9 @@ export default function BottomNavbar() {
 	const [value, setValue] = React.useState(0);
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
-	const { theme } = useTheme();
+	const { theme, secondaryBackgroundColor, textAndIconColor, backgroundColor } =
+		useTheme();
 	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
-
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
 	function fillIconColor(path: string, selectionBoolean = false) {
 		return pathname === path || selectionBoolean
 			? theme === 'dark'
@@ -35,8 +34,6 @@ export default function BottomNavbar() {
 				: 'black'
 			: 'none';
 	}
-	const backgroundMenuColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
-	const iconColor = theme === 'dark' ? 'white' : 'black';
 	const boxShadow =
 		theme === 'dark'
 			? '0px -1px 1px rgba(250, 250, 250, 0.2)'
@@ -69,15 +66,15 @@ export default function BottomNavbar() {
 			<BottomNavigationAction
 				onClick={() => navigate('/')}
 				sx={{
-					color: iconColor,
+					color: textAndIconColor,
 					'&.Mui-selected': {
-						color: iconColor,
+						color: textAndIconColor,
 					},
 				}}
 				icon={
 					<Home
 						sx={{
-							stroke: iconColor,
+							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/'),
 						}}
@@ -87,15 +84,15 @@ export default function BottomNavbar() {
 			<BottomNavigationAction
 				onClick={() => navigate('/messages')}
 				sx={{
-					color: iconColor,
+					color: textAndIconColor,
 					'&.Mui-selected': {
-						color: iconColor,
+						color: textAndIconColor,
 					},
 				}}
 				icon={
 					<Send
 						sx={{
-							stroke: iconColor,
+							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/messages'),
 						}}
@@ -105,15 +102,15 @@ export default function BottomNavbar() {
 			<BottomNavigationAction
 				onClick={() => setOpenCreatePostModal(true)}
 				sx={{
-					color: iconColor,
+					color: textAndIconColor,
 					'&.Mui-selected': {
-						color: iconColor,
+						color: textAndIconColor,
 					},
 				}}
 				icon={
 					<AddCircleOutline
 						sx={{
-							stroke: iconColor,
+							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('asdasdas', openCreatePostModal),
 						}}
@@ -123,15 +120,15 @@ export default function BottomNavbar() {
 			<BottomNavigationAction
 				onClick={() => navigate('/profile')}
 				sx={{
-					color: iconColor,
+					color: textAndIconColor,
 					'&.Mui-selected': {
-						color: iconColor,
+						color: textAndIconColor,
 					},
 				}}
 				icon={
 					<AccountCircle
 						sx={{
-							stroke: iconColor,
+							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/profile'),
 						}}
@@ -140,16 +137,16 @@ export default function BottomNavbar() {
 			/>
 			<BottomNavigationAction
 				sx={{
-					color: iconColor,
+					color: textAndIconColor,
 					'&.Mui-selected': {
-						color: iconColor,
+						color: textAndIconColor,
 					},
 				}}
 				onClick={handleClick}
 				icon={
 					<MenuIcon
 						sx={{
-							stroke: iconColor,
+							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/emptynever', open),
 						}}
@@ -167,7 +164,7 @@ export default function BottomNavbar() {
 				}}
 				sx={{
 					'& .MuiPaper-root': {
-						backgroundColor: backgroundMenuColor,
+						backgroundColor: secondaryBackgroundColor,
 					},
 				}}
 			>

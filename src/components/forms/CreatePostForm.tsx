@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { TextareaAutosize, Typography, ButtonBase } from '@mui/material';
-import { createPost } from '../services/firestore';
+import { createPost } from '../../services/firestore';
 import { ImageSearch } from '@mui/icons-material';
-import Button from './Button';
-import useTheme from '../hooks/useTheme';
-import useAuth from '../hooks/useAuth';
-import useDashboard from '../hooks/useDashboard';
+import Button from '../Button';
+import useTheme from '../../hooks/useTheme';
+import useAuth from '../../hooks/useAuth';
+import useDashboard from '../../hooks/useDashboard';
 import * as Yup from 'yup';
 
 const MAX_FILE_SIZE = 5242880; // 5 MB in bytes
@@ -35,13 +35,10 @@ const validationSchema = Yup.object().shape({
 
 export default function CreatePostForm() {
 	const { user } = useAuth();
-	const { theme } = useTheme();
+	const { secondaryBackgroundColor, textAndIconColor, borderColor } =
+		useTheme();
 	const { setOpenCreatePostModal } = useDashboard();
 	const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
-	const backgroundColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
-	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
-	const borderColor =
-		theme === 'dark' ? 'rgba(250, 250, 250, 0.2)' : 'rgba(0, 0, 0, 0.2)';
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -164,7 +161,7 @@ export default function CreatePostForm() {
 							minHeight: 100,
 							borderRadius: 5,
 							border: `1px solid ${borderColor}`,
-							backgroundColor: backgroundColor,
+							backgroundColor: secondaryBackgroundColor,
 							color: textAndIconColor,
 							outline: 'none',
 						}}

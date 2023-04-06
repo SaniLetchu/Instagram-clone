@@ -1,21 +1,27 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import useTheme from '../../hooks/useTheme';
+import SettingsForm from '../../components/forms/SettingsForm';
 
 export default function SettingsPage() {
-	const { theme } = useTheme();
-	const backgroundColor = theme === 'dark' ? 'black' : 'white';
+	const { textAndIconColor, backgroundColor } = useTheme();
 	return (
 		<Container
 			maxWidth={false}
 			disableGutters
 			sx={{
 				display: 'flex',
+				flexDirection: 'column',
 				bgcolor: backgroundColor,
-				justifyContent: 'center',
+				alignItems: 'center',
+				paddingTop: 5,
+				gap: 2,
 			}}
 		>
-			settings
+			<Typography variant="h4" sx={{ color: textAndIconColor }}>
+				Settings
+			</Typography>
+			<SettingsForm />
 		</Container>
 	);
 }

@@ -1,16 +1,13 @@
 import React from 'react';
 import { Box, Typography, Modal, Divider } from '@mui/material';
-import useTheme from '../hooks/useTheme';
-import useDashboard from '../hooks/useDashboard';
-import CreatePostForm from './CreatePostForm';
+import useTheme from '../../hooks/useTheme';
+import useDashboard from '../../hooks/useDashboard';
+import CreatePostForm from '../forms/CreatePostForm';
 
 export default function CreatePostModal() {
-	const { theme } = useTheme();
+	const { secondaryBackgroundColor, textAndIconColor, borderColor } =
+		useTheme();
 	const { openCreatePostModal, setOpenCreatePostModal } = useDashboard();
-	const backgroundColor = theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
-	const textAndIconColor = theme === 'dark' ? 'white' : 'black';
-	const borderColor =
-		theme === 'dark' ? 'rgba(250, 250, 250, 0.2)' : 'rgba(0, 0, 0, 0.2)';
 	const handleClose = () => setOpenCreatePostModal(false);
 
 	const style = {
@@ -22,7 +19,7 @@ export default function CreatePostModal() {
 		transform: 'translate(-50%, -50%)',
 		alignItems: 'center',
 		width: 300,
-		bgcolor: backgroundColor,
+		bgcolor: secondaryBackgroundColor,
 		borderRadius: 2,
 		boxShadow: 24,
 		py: 1,

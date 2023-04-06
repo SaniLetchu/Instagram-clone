@@ -97,3 +97,33 @@ export async function createPost(caption: string, image: File, userId: string) {
 		return false;
 	}
 }
+
+export async function updateUserProfile(
+	userId: string,
+	bio: string | undefined,
+	profileImage: File | null | undefined
+) {
+	try {
+		const userDocRef = doc(firestore, 'users', userId);
+
+		let profileImageUrl;
+
+		if (profileImage) {
+			const randomName = userId;
+			const storageRef = ref(storage, `profilepic/${randomName}`);
+			const snapshot = await uploadBytes(storageRef, profileImage);
+			profileImageUrl = await getDownloadURL(snapshot.ref);
+		}
+
+		const updateData: Partial<User> = {
+			...(bio && { bio }),
+			...(profileImageUrl && { profileImageUrl }),
+		};
+
+		await updateDoc(userDocRef, updateData);
+		return true;
+	} catch (error) {
+		console.error('Error updating user profile:', error);
+		return false;
+	}
+}

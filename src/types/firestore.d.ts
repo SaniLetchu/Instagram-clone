@@ -12,6 +12,7 @@ export type User = {
 
 export type Post = {
 	userId: string;
+	username: string;
 	imageUrl: string;
 	caption: string;
 	timestamp: Timestamp;
@@ -49,3 +50,5 @@ export type Following = {
 	userId: string;
 	followingUserId: string;
 };
+
+export type PostWithId = Post & { id: string };

@@ -6,15 +6,17 @@ import {
 	collection,
 	where,
 	getDoc,
+	deleteDoc,
 	addDoc,
 	setDoc,
 	query,
 	getDocs,
 	serverTimestamp,
 	Timestamp,
+	increment,
 } from 'firebase/firestore';
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
-import { Post, User } from '../types/firestore';
+import { Post, User, Like } from '../types/firestore';
 
 const usersRef = collection(firestore, 'users');
 const postsRef = collection(firestore, 'posts');
@@ -61,7 +63,12 @@ export async function createUserDocument(
 	}
 }
 
-export async function createPost(caption: string, image: File, userId: string) {
+export async function createPost(
+	caption: string,
+	image: File,
+	userId: string,
+	username: string
+) {
 	function generateRandomString(length: number) {
 		const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 		let result = '';
@@ -84,6 +91,7 @@ export async function createPost(caption: string, image: File, userId: string) {
 
 		const newPost: Post = {
 			caption,
+			username,
 			imageUrl: url,
 			userId,
 			timestamp: serverTimestamp() as Timestamp,
@@ -91,6 +99,10 @@ export async function createPost(caption: string, image: File, userId: string) {
 			commentsCount: 0,
 		};
 		await addDoc(postsRef, newPost);
+		const userDocRef = doc(firestore, 'users', userId);
+		await updateDoc(userDocRef, {
+			postCount: increment(1),
+		});
 		return true;
 	} catch (error) {
 		console.error('Error creating post:', error);
@@ -124,6 +136,44 @@ export async function updateUserProfile(
 		return true;
 	} catch (error) {
 		console.error('Error updating user profile:', error);
+		return false;
+	}
+}
+
+export async function toggleLike(postId: string, userId: string) {
+	try {
+		const postDocRef = doc(firestore, 'posts', postId);
+		const likeDocRef = doc(firestore, 'likes', `${userId}_${postId}`);
+		const likeQuery = query(
+			likesRef,
+			where('postId', '==', postId),
+			where('userId', '==', userId)
+		);
+
+		const querySnapshot = await getDocs(likeQuery);
+
+		if (querySnapshot.empty) {
+			// The like document doesn't exist; create it and increment likesCount
+			const newLike: Like = {
+				postId,
+				userId,
+			};
+
+			await setDoc(likeDocRef, newLike);
+			await updateDoc(postDocRef, {
+				likesCount: increment(1),
+			});
+		} else {
+			// The like document exists; delete it and decrement likesCount
+			const likeDoc = querySnapshot.docs[0];
+			await deleteDoc(likeDoc.ref);
+			await updateDoc(postDocRef, {
+				likesCount: increment(-1),
+			});
+		}
+		return true;
+	} catch (error) {
+		console.error('Error toggling like:', error);
 		return false;
 	}
 }

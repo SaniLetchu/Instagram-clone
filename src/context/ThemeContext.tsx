@@ -10,6 +10,7 @@ interface ThemeContextInterface {
 	reverseTextAndIconColor: string;
 	backgroundColor: string;
 	textInputBackgroundColor: string;
+	iconHoverBackgroundColor: string;
 }
 
 interface ThemeProps {
@@ -33,6 +34,8 @@ export default function ThemeProvider({ children }: ThemeProps) {
 	const secondaryBackgroundColor =
 		theme === 'dark' ? 'rgb(38, 38, 38)' : 'white';
 	const buttonBackgroundColor = theme === 'dark' ? 'white' : 'rgb(38, 38, 38)';
+	const iconHoverBackgroundColor =
+		theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)';
 	const textInputBackgroundColor =
 		theme === 'dark' ? 'rgb(38, 38, 38)' : 'rgb(239, 239, 239)';
 
@@ -53,6 +56,7 @@ export default function ThemeProvider({ children }: ThemeProps) {
 			reverseTextAndIconColor,
 			backgroundColor,
 			textInputBackgroundColor,
+			iconHoverBackgroundColor,
 		}),
 		[theme]
 	);

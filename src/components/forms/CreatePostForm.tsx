@@ -6,6 +6,7 @@ import { ImageSearch } from '@mui/icons-material';
 import Button from '../Button';
 import useTheme from '../../hooks/useTheme';
 import useAuth from '../../hooks/useAuth';
+import useUser from '../../hooks/useUser';
 import useDashboard from '../../hooks/useDashboard';
 import * as Yup from 'yup';
 
@@ -35,6 +36,7 @@ const validationSchema = Yup.object().shape({
 
 export default function CreatePostForm() {
 	const { user } = useAuth();
+	const { userData } = useUser();
 	const { secondaryBackgroundColor, textAndIconColor, borderColor } =
 		useTheme();
 	const { setOpenCreatePostModal } = useDashboard();
@@ -48,7 +50,8 @@ export default function CreatePostForm() {
 				const success = await createPost(
 					values.caption,
 					values.image as File,
-					user?.uid as string
+					user?.uid as string,
+					userData?.username as string
 				);
 				if (!success) {
 					actions.setStatus({ message: 'Error creating post' });

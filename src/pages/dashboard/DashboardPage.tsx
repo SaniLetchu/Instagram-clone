@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import useTheme from '../../hooks/useTheme';
 import DrawerNavbar from '../../components/navbars/drawer/DrawerNavbar';
 import TopNavbar from '../../components/navbars/top/TopNavbar';

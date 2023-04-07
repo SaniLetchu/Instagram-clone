@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from '@mui/material';
 import useTheme from '../../hooks/useTheme';
+import PostsInfiniteScroll from '../../components/infinitescrolls/PostsInfiniteScroll';
 
 export default function HomePage() {
 	const { backgroundColor } = useTheme();
@@ -14,7 +15,7 @@ export default function HomePage() {
 				justifyContent: 'center',
 			}}
 		>
-			home
+			<PostsInfiniteScroll />
 		</Container>
 	);
 }

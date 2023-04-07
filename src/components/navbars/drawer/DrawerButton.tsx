@@ -37,7 +37,7 @@ export default function DrawerButton({
 	path,
 	selectionBoolean,
 }: DrawerButtonProps) {
-	const { textAndIconColor, theme } = useTheme();
+	const { textAndIconColor, iconHoverBackgroundColor, theme } = useTheme();
 	const { pathname } = useLocation();
 	const fillIconColor =
 		pathname === path || selectionBoolean
@@ -60,8 +60,7 @@ export default function DrawerButton({
 				sx={{
 					borderRadius: 100,
 					'&:hover': {
-						backgroundColor:
-							theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
+						backgroundColor: iconHoverBackgroundColor,
 					},
 					alignItems: 'center',
 					justifyContent: 'center',

@@ -16,7 +16,7 @@ import {
 	increment,
 } from 'firebase/firestore';
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
-import { Post, User, Like } from '../types/firestore';
+import { Post, User, Like, Comment } from '../types/firestore';
 
 const usersRef = collection(firestore, 'users');
 const postsRef = collection(firestore, 'posts');
@@ -164,9 +164,7 @@ export async function toggleLike(postId: string, userId: string) {
 				likesCount: increment(1),
 			});
 		} else {
-			// The like document exists; delete it and decrement likesCount
-			const likeDoc = querySnapshot.docs[0];
-			await deleteDoc(likeDoc.ref);
+			await deleteDoc(likeDocRef);
 			await updateDoc(postDocRef, {
 				likesCount: increment(-1),
 			});
@@ -174,6 +172,33 @@ export async function toggleLike(postId: string, userId: string) {
 		return true;
 	} catch (error) {
 		console.error('Error toggling like:', error);
+		return false;
+	}
+}
+
+export async function createComment(
+	postId: string,
+	userId: string,
+	username: string,
+	comment: string
+) {
+	try {
+		const newComment: Comment = {
+			postId,
+			userId,
+			username,
+			text: comment,
+			timestamp: serverTimestamp() as Timestamp,
+		};
+
+		await addDoc(commentsRef, newComment);
+
+		await updateDoc(doc(firestore, 'posts', postId), {
+			commentsCount: increment(1),
+		});
+		return true;
+	} catch (error) {
+		console.error('Error creating comment:', error);
 		return false;
 	}
 }

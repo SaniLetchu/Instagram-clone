@@ -18,6 +18,7 @@ export default function PostsInfiniteScroll() {
 	const [posts, setPosts] = useState<PostWithId[]>([]);
 	const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null);
 	const [loading, setLoading] = useState(false);
+	const [canFetchMore, setCanFetchMore] = useState(true);
 	const [unsubscribes, setUnsubscribes] = useState<(() => void)[]>([]);
 
 	const fetchMorePosts = async () => {
@@ -35,6 +36,11 @@ export default function PostsInfiniteScroll() {
 
 		// Get the initial data and set up listeners for each document
 		const querySnapshot = await getDocs(postsQuery);
+		if (querySnapshot.docs.length === 0) {
+			// No more posts to load, disable the "fetch more"
+			setCanFetchMore(false);
+			return;
+		}
 		querySnapshot.docs.forEach((document) => {
 			const postId = document.id;
 			const postData = document.data() as PostType;
@@ -49,6 +55,7 @@ export default function PostsInfiniteScroll() {
 
 			// Set up a listener for this specific document
 			const docRef = doc(firestore, 'posts', postId);
+
 			const unsubscribeSnapshot = onSnapshot(docRef, (docSnapshot) => {
 				const updatedPost: PostWithId = {
 					id: docSnapshot.id,
@@ -78,7 +85,11 @@ export default function PostsInfiniteScroll() {
 		const clientHeight = window.innerHeight;
 		const scrollHeight = document.documentElement.scrollHeight;
 		const threshold = 0;
-		if (scrollHeight - scrollTop - threshold <= clientHeight && !loading) {
+		if (
+			scrollHeight - scrollTop - threshold <= clientHeight &&
+			!loading &&
+			canFetchMore
+		) {
 			fetchMorePosts();
 		}
 	};

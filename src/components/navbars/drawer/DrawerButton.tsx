@@ -76,6 +76,9 @@ export default function DrawerButton({
 							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor,
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
 						}}
 					/>
 				</ListItemIcon>

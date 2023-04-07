@@ -27,6 +27,7 @@ export type Like = {
 
 export type Comment = {
 	userId: string;
+	username: string;
 	postId: string;
 	text: string;
 	timestamp: Timestamp;

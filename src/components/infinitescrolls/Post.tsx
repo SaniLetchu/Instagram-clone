@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { Timestamp } from 'firebase/firestore';
 import { PostWithId } from '../../types/firestore';
 import useTheme from '../../hooks/useTheme';
+import useAuth from '../../hooks/useAuth';
+import useUser from '../../hooks/useUser';
 import PostIconRoW from './PostIconRow';
-import { Box, Typography, Divider } from '@mui/material';
+import { Send } from '@mui/icons-material';
+import { createComment } from '../../services/firestore';
+import { Box, Typography, Divider, IconButton, TextField } from '@mui/material';
 
 interface PostProps {
 	post: PostWithId;
@@ -37,13 +41,35 @@ function timeSince(timestamp: Timestamp): string {
 
 export default function Post({ post }: PostProps) {
 	const { textAndIconColor, borderColor } = useTheme();
+	const { user } = useAuth();
+	const { userData } = useUser();
+	const [searchValue, setSearchValue] = useState('');
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setSearchValue(event.target.value);
+	};
+	const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
+		event.preventDefault();
+		if (searchValue) {
+			const success = await createComment(
+				post.id,
+				user?.uid as string,
+				userData?.username as string,
+				searchValue
+			);
+			if (success) {
+				setSearchValue('');
+			}
+		}
+	};
+
 	return (
 		<Box
 			sx={{
 				width: 500,
 				display: 'flex',
 				flexDirection: 'column',
-				gap: 1,
+				gap: 0.5,
 				'@media (max-width: 500px)': {
 					width: '100%',
 				},
@@ -52,7 +78,7 @@ export default function Post({ post }: PostProps) {
 		>
 			<Box sx={{ display: 'flex', alignItems: 'end', gap: 1, px: 0.5 }}>
 				<Typography sx={{ color: textAndIconColor }}>
-					{post.username}
+					<strong>{post.username}</strong>
 				</Typography>
 				<Typography sx={{ color: 'rgb(142, 142, 142)' }} variant="caption">
 					•
@@ -73,8 +99,47 @@ export default function Post({ post }: PostProps) {
 			/>
 			<PostIconRoW post={post} />
 			<Typography sx={{ color: textAndIconColor, px: 0.5 }}>
-				{post.likesCount} likes
+				<strong>{post.likesCount} likes</strong>
 			</Typography>
+			<Typography sx={{ color: textAndIconColor, px: 0.5 }}>
+				<strong>{post.username}</strong> {post.caption}
+			</Typography>
+			<Typography sx={{ color: 'rgb(142, 142, 142)', px: 0.5 }}>
+				View all {post.commentsCount} comments
+			</Typography>
+			<Box
+				component="form"
+				onSubmit={handleSubmit}
+				display="flex"
+				alignItems="center"
+				justifyContent="center"
+			>
+				<TextField
+					value={searchValue}
+					onChange={handleChange}
+					fullWidth
+					variant="standard"
+					placeholder="Add a comment..."
+					size="small"
+					sx={{
+						mx: 0.5,
+						input: {
+							color: textAndIconColor,
+							'&::placeholder': {
+								color: 'rgb(142, 142, 142)',
+							},
+						},
+					}}
+					InputProps={{
+						endAdornment: (
+							<IconButton type="submit" sx={{ color: 'rgb(142, 142, 142)' }}>
+								<Send fontSize="small" />
+							</IconButton>
+						),
+						disableUnderline: true,
+					}}
+				/>
+			</Box>
 			<Divider
 				sx={{ backgroundColor: borderColor, width: '100%', marginTop: 2 }}
 			/>

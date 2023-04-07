@@ -7,7 +7,6 @@ import { FavoriteBorder, Favorite } from '@mui/icons-material';
 import { firestore } from '../../configs/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { toggleLike } from '../../services/firestore';
-import { debounce } from ' lodash';
 
 interface PostIconRowProps {
 	post: PostWithId;
@@ -16,6 +15,7 @@ interface PostIconRowProps {
 export default function PostIconRoW({ post }: PostIconRowProps) {
 	const { user } = useAuth();
 	const [liked, setLiked] = useState(false);
+	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 	const { textAndIconColor, iconHoverBackgroundColor } = useTheme();
 
 	useEffect(() => {
@@ -30,10 +30,20 @@ export default function PostIconRoW({ post }: PostIconRowProps) {
 	}, []);
 
 	const handleLikeToggle = () => {
-		if (user) {
+		if (user && !isButtonDisabled) {
 			toggleLike(post.id, user.uid);
+			setIsButtonDisabled(true);
 		}
 	};
+
+	useEffect(() => {
+		if (isButtonDisabled) {
+			const timer = setTimeout(() => {
+				setIsButtonDisabled(false);
+			}, 1000);
+			return () => clearTimeout(timer);
+		}
+	}, [isButtonDisabled]);
 
 	return (
 		<Box
@@ -51,9 +61,25 @@ export default function PostIconRoW({ post }: PostIconRowProps) {
 				}}
 			>
 				{liked ? (
-					<Favorite sx={{ color: '#e31b23' }} fontSize="medium" />
+					<Favorite
+						sx={{
+							color: '#e31b23',
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
+						}}
+						fontSize="medium"
+					/>
 				) : (
-					<FavoriteBorder sx={{ color: textAndIconColor }} fontSize="medium" />
+					<FavoriteBorder
+						sx={{
+							color: textAndIconColor,
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
+						}}
+						fontSize="medium"
+					/>
 				)}
 			</IconButton>
 		</Box>

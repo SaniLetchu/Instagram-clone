@@ -77,6 +77,9 @@ export default function BottomNavbar() {
 							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/'),
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
 						}}
 					/>
 				}
@@ -95,6 +98,9 @@ export default function BottomNavbar() {
 							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/messages'),
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
 						}}
 					/>
 				}
@@ -113,6 +119,9 @@ export default function BottomNavbar() {
 							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('asdasdas', openCreatePostModal),
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
 						}}
 					/>
 				}
@@ -131,6 +140,9 @@ export default function BottomNavbar() {
 							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/profile'),
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
 						}}
 					/>
 				}
@@ -149,6 +161,9 @@ export default function BottomNavbar() {
 							stroke: textAndIconColor,
 							strokeWidth: 1,
 							fill: fillIconColor('/emptynever', open),
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
 						}}
 					/>
 				}

@@ -38,7 +38,6 @@ export default function TopNavbarSearch({ onSearch }: TopNavbarSearchProps) {
 				placeholder="Search"
 				size="small"
 				sx={{
-					mr: 1,
 					borderRadius: 2,
 					bgcolor: textInputBackgroundColor,
 					input: {

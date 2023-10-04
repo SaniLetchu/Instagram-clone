@@ -39,7 +39,7 @@ export default function TopNavbar() {
 				}}
 			>
 				<TopNavbarLogo />
-				<Box sx={{ flexGrow: 1, minWidth: 5 }} />
+				<Box sx={{ flexGrow: 1, minWidth: 15 }} />
 				<TopNavbarSearch onSearch={handleSearch} />
 			</Toolbar>
 		</AppBar>

@@ -7,7 +7,16 @@ import useUser from '../../hooks/useUser';
 import PostIconRoW from './PostIconRow';
 import { Send } from '@mui/icons-material';
 import { createComment } from '../../services/firestore';
-import { Box, Typography, Divider, IconButton, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import useDashboard from '../../hooks/useDashboard';
+import {
+	Box,
+	Typography,
+	Divider,
+	IconButton,
+	TextField,
+	ButtonBase,
+} from '@mui/material';
 
 interface PostProps {
 	post: PostWithId;
@@ -41,8 +50,10 @@ function timeSince(timestamp: Timestamp): string {
 
 export default function Post({ post }: PostProps) {
 	const { textAndIconColor, borderColor } = useTheme();
+	const { setOpenPostModal, setPostId } = useDashboard();
 	const { user } = useAuth();
 	const { userData } = useUser();
+	const navigate = useNavigate();
 	const [searchValue, setSearchValue] = useState('');
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -77,9 +88,11 @@ export default function Post({ post }: PostProps) {
 			}}
 		>
 			<Box sx={{ display: 'flex', alignItems: 'end', gap: 1, px: 0.5 }}>
-				<Typography sx={{ color: textAndIconColor }}>
-					<strong>{post.username}</strong>
-				</Typography>
+				<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
+					<Typography sx={{ color: textAndIconColor }}>
+						<strong>{post.username}</strong>
+					</Typography>
+				</ButtonBase>
 				<Typography sx={{ color: 'rgb(142, 142, 142)' }} variant="caption">
 					•
 				</Typography>
@@ -104,9 +117,17 @@ export default function Post({ post }: PostProps) {
 			<Typography sx={{ color: textAndIconColor, px: 0.5 }}>
 				<strong>{post.username}</strong> {post.caption}
 			</Typography>
-			<Typography sx={{ color: 'rgb(142, 142, 142)', px: 0.5 }}>
-				View all {post.commentsCount} comments
-			</Typography>
+			<ButtonBase
+				sx={{ alignSelf: 'start', px: 0.5 }}
+				onClick={() => {
+					setPostId(post.id);
+					setOpenPostModal(true);
+				}}
+			>
+				<Typography sx={{ color: 'rgb(142, 142, 142)' }}>
+					View all {post.commentsCount} comments
+				</Typography>
+			</ButtonBase>
 			<Box
 				component="form"
 				onSubmit={handleSubmit}

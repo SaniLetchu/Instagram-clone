@@ -11,6 +11,7 @@ import ProfilePage from './ProfilePage';
 import SettingsPage from './SettingsPage';
 import UsernameModal from '../../components/modals/UsernameModal';
 import CreatePostModal from '../../components/modals/CreatePostModal';
+import PostModal from '../../components/modals/PostModal';
 
 const flexDirection = {
 	xs: 'column',
@@ -42,6 +43,7 @@ export default function DashboardPage() {
 		>
 			<CreatePostModal />
 			<UsernameModal />
+			<PostModal />
 			<DrawerNavbar />
 			<TopNavbar />
 			<Container
@@ -56,7 +58,7 @@ export default function DashboardPage() {
 			>
 				<Routes>
 					<Route path="/" Component={HomePage}></Route>
-					<Route path="/profile" Component={ProfilePage}></Route>
+					<Route path="/profile/:userId" Component={ProfilePage}></Route>
 					<Route path="/settings" Component={SettingsPage}></Route>
 					<Route path="/messages" Component={MessagesPage}></Route>
 				</Routes>

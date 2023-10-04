@@ -8,6 +8,7 @@ import {
 	AccountCircle,
 	Menu as MenuIcon,
 } from '@mui/icons-material';
+import useAuth from '../../../hooks/useAuth';
 import useTheme from '../../../hooks/useTheme';
 import useDashboard from '../../../hooks/useDashboard';
 import DrawerButton from './DrawerButton';
@@ -28,6 +29,7 @@ export default function DrawerNavbar() {
 	const { theme, backgroundColor, secondaryBackgroundColor } = useTheme();
 	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
 	const navigate = useNavigate();
+	const { user } = useAuth();
 	const boxShadow =
 		theme === 'dark'
 			? '1px 0px 1px rgba(250, 250, 250, 0.2)'
@@ -126,7 +128,7 @@ export default function DrawerNavbar() {
 								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
 						},
 					}}
-					onClick={() => navigate('/profile')}
+					onClick={() => navigate(`/profile/${user?.uid}`)}
 				>
 					<DrawerButton
 						IconComponent={AccountCircle}

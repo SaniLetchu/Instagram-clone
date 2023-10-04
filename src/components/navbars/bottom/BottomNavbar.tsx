@@ -8,6 +8,7 @@ import {
 	Menu as MenuIcon,
 } from '@mui/icons-material';
 import NavbarMenu from '../NavbarMenu';
+import useAuth from '../../../hooks/useAuth';
 import useTheme from '../../../hooks/useTheme';
 import useDashboard from '../../../hooks/useDashboard';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -24,6 +25,7 @@ export default function BottomNavbar() {
 	const [value, setValue] = React.useState(0);
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
+	const { user } = useAuth();
 	const { theme, secondaryBackgroundColor, textAndIconColor, backgroundColor } =
 		useTheme();
 	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
@@ -127,7 +129,7 @@ export default function BottomNavbar() {
 				}
 			/>
 			<BottomNavigationAction
-				onClick={() => navigate('/profile')}
+				onClick={() => navigate(`/profile/${user?.uid}`)}
 				sx={{
 					color: textAndIconColor,
 					'&.Mui-selected': {
@@ -139,7 +141,7 @@ export default function BottomNavbar() {
 						sx={{
 							stroke: textAndIconColor,
 							strokeWidth: 1,
-							fill: fillIconColor('/profile'),
+							fill: fillIconColor(`/profile/${user?.uid}`),
 							'&:hover': {
 								transform: 'scale(1.1)',
 							},

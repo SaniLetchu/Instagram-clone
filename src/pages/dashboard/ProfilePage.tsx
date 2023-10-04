@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import useTheme from '../../hooks/useTheme';
 import useUser from '../../hooks/useUser';
+import { User } from '../../types/firestore';
+import useAuth from '../../hooks/useAuth';
+import { onSnapshot, doc } from 'firebase/firestore';
+import { firestore } from '../../configs/firebase';
+import { useParams, useNavigate } from 'react-router-dom';
 import { AccountCircle } from '@mui/icons-material';
+import Button from '../../components/Button';
 
 export default function ProfilePage() {
 	const { backgroundColor, textAndIconColor, borderColor } = useTheme();
 	const { userData } = useUser();
+	const { user } = useAuth();
+	const navigate = useNavigate();
+	const [userdata, setUserData] = useState<User>();
+	const { userId } = useParams();
+
+	useEffect(() => {
+		if (userId !== user?.uid) {
+			const userRef = doc(firestore, 'users', userId as string);
+			const unsubscribe = onSnapshot(userRef, (snapshot) => {
+				setUserData(snapshot.data() as User);
+			});
+
+			return () => unsubscribe();
+		} else {
+			setUserData(userData as User);
+		}
+	}, [userId]);
+
 	return (
 		<Container
 			maxWidth={false}
@@ -20,7 +44,12 @@ export default function ProfilePage() {
 				gap: 2,
 			}}
 		>
-			{userData?.profileImageUrl && (
+			{userId === user?.uid && (
+				<Box sx={{ position: 'absolute', right: 20 }}>
+					<Button text="Edit profile" onClick={() => navigate('/settings')} />
+				</Box>
+			)}
+			{userdata?.profileImageUrl && (
 				<img
 					style={{
 						width: 150,
@@ -29,10 +58,10 @@ export default function ProfilePage() {
 						boxShadow: `0 0 10px 2px ${textAndIconColor}`,
 						objectFit: 'cover',
 					}}
-					src={userData?.profileImageUrl as string}
+					src={userdata?.profileImageUrl as string}
 				/>
 			)}
-			{!userData?.profileImageUrl && (
+			{!userdata?.profileImageUrl && (
 				<AccountCircle
 					fontSize="large"
 					sx={{
@@ -44,10 +73,10 @@ export default function ProfilePage() {
 				/>
 			)}
 			<Typography variant="h4" sx={{ color: textAndIconColor }}>
-				{userData?.username as string}
+				{userdata?.username as string}
 			</Typography>
 			<Typography variant="subtitle2" sx={{ color: textAndIconColor }}>
-				{userData?.bio as string}
+				{userdata?.bio as string}
 			</Typography>
 			<Box
 				sx={{
@@ -73,7 +102,7 @@ export default function ProfilePage() {
 						variant="subtitle1"
 						sx={{ color: textAndIconColor, marginBottom: -1 }}
 					>
-						{userData?.postCount}
+						{userdata?.postCount}
 					</Typography>
 					<Typography variant="subtitle1" sx={{ color: 'grey' }}>
 						post
@@ -92,7 +121,7 @@ export default function ProfilePage() {
 						variant="subtitle1"
 						sx={{ color: textAndIconColor, marginBottom: -1 }}
 					>
-						{userData?.followersCount}
+						{userdata?.followersCount}
 					</Typography>
 					<Typography variant="subtitle1" sx={{ color: 'grey' }}>
 						followers
@@ -111,7 +140,7 @@ export default function ProfilePage() {
 						variant="subtitle1"
 						sx={{ color: textAndIconColor, marginBottom: -1 }}
 					>
-						{userData?.followingCount}
+						{userdata?.followingCount}
 					</Typography>
 					<Typography variant="subtitle1" sx={{ color: 'grey' }}>
 						following

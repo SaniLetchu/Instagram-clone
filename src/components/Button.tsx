@@ -5,13 +5,15 @@ import useTheme from '../hooks/useTheme';
 interface ButtonProps {
 	text: string;
 	disabled?: boolean;
+	onClick?(): void;
 }
 
-export default function Button({ text, disabled }: ButtonProps) {
+export default function Button({ text, disabled, onClick }: ButtonProps) {
 	const { buttonBackgroundColor, reverseTextAndIconColor } = useTheme();
 	return (
 		<ButtonBase
 			type="submit"
+			onClick={onClick}
 			disabled={disabled}
 			sx={{
 				px: 2,
@@ -20,7 +22,7 @@ export default function Button({ text, disabled }: ButtonProps) {
 				bgcolor: buttonBackgroundColor,
 				justifyContent: 'center',
 				alignItems: 'center',
-				borderRadius: 3.5,
+				borderRadius: 2.5,
 			}}
 		>
 			<Typography

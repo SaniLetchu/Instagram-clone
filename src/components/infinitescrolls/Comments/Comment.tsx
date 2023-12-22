@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, ButtonBase } from '@mui/material';
 import { Timestamp } from 'firebase/firestore';
 import { AccountCircle } from '@mui/icons-material';

@@ -166,6 +166,7 @@ export default function CommentsInfiniteScroll() {
 				ref={listRef}
 				style={{
 					maxHeight: '100%',
+					height: '100%',
 					overflow: 'auto',
 					display: 'flex',
 					flexDirection: 'column',

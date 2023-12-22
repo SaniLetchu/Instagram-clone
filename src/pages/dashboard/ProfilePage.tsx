@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Box } from '@mui/material';
+import { Container, Typography, Box, ButtonBase } from '@mui/material';
 import useTheme from '../../hooks/useTheme';
 import useUser from '../../hooks/useUser';
 import { User } from '../../types/firestore';
@@ -7,11 +7,33 @@ import useAuth from '../../hooks/useAuth';
 import { onSnapshot, doc } from 'firebase/firestore';
 import { firestore } from '../../configs/firebase';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AccountCircle } from '@mui/icons-material';
+import { AccountCircle, Settings } from '@mui/icons-material';
 import Button from '../../components/Button';
 
+const displayButtonText = {
+	xs: 'none',
+	sm: 'none',
+	md: 'block',
+	lg: 'block',
+	xl: 'block',
+};
+
+const displayButtonIcon = {
+	xs: 'flex',
+	sm: 'flex',
+	md: 'none',
+	lg: 'none',
+	xl: 'none',
+};
+
 export default function ProfilePage() {
-	const { backgroundColor, textAndIconColor, borderColor } = useTheme();
+	const {
+		backgroundColor,
+		textAndIconColor,
+		borderColor,
+		buttonBackgroundColor,
+		reverseTextAndIconColor,
+	} = useTheme();
 	const { userData } = useUser();
 	const { user } = useAuth();
 	const navigate = useNavigate();
@@ -46,7 +68,28 @@ export default function ProfilePage() {
 		>
 			{userId === user?.uid && (
 				<Box sx={{ position: 'absolute', right: 20 }}>
-					<Button text="Edit profile" onClick={() => navigate('/settings')} />
+					<Box sx={{ display: displayButtonText }}>
+						<Button text="Edit profile" onClick={() => navigate('/settings')} />
+					</Box>
+					<ButtonBase
+						type="submit"
+						onClick={() => navigate('/settings')}
+						sx={{
+							px: 2,
+							py: 0.5,
+							bgcolor: buttonBackgroundColor,
+							justifyContent: 'center',
+							alignItems: 'center',
+							borderRadius: 2.5,
+							display: displayButtonIcon,
+						}}
+					>
+						<Settings
+							sx={{
+								color: reverseTextAndIconColor,
+							}}
+						/>
+					</ButtonBase>
 				</Box>
 			)}
 			{userdata?.profileImageUrl && (

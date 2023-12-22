@@ -16,7 +16,14 @@ import {
 	increment,
 } from 'firebase/firestore';
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
-import { Post, User, Like, Comment } from '../types/firestore';
+import {
+	Post,
+	User,
+	Like,
+	Comment,
+	Follower,
+	Following,
+} from '../types/firestore';
 
 const usersRef = collection(firestore, 'users');
 const postsRef = collection(firestore, 'posts');
@@ -203,13 +210,70 @@ export async function createComment(
 	}
 }
 
-export async function fetchProfilePicture(userId: string) {
+export async function followUser(userId: string, followedId: string) {
 	try {
-		const storageRef = ref(storage, `profilepic/${userId}`);
-		const downloadURL = await getDownloadURL(storageRef);
-		return downloadURL;
+		const followerDocRef = doc(
+			firestore,
+			'followers',
+			`${followedId}_${userId}`
+		);
+		const followerData: Follower = {
+			userId: followedId,
+			followerUserId: userId,
+		};
+		await setDoc(followerDocRef, followerData);
+
+		const userDocRef = doc(firestore, 'users', userId);
+		await updateDoc(userDocRef, { followingCount: increment(1) });
+
+		const followedUserDocRef = doc(firestore, 'users', followedId);
+		await updateDoc(followedUserDocRef, { followersCount: increment(1) });
+
+		// For managing the followings collection
+		const followingDocRef = doc(
+			firestore,
+			'followings',
+			`${userId}_${followedId}`
+		);
+		const followingData: Following = {
+			userId: userId,
+			followingUserId: followedId,
+		};
+		await setDoc(followingDocRef, followingData);
+
+		return true;
 	} catch (error) {
-		console.error('Error fetching profile picture:', error);
-		return null;
+		console.error('Error following user:', error);
+		return false;
+	}
+}
+
+export async function unFollowUser(userId: string, followedId: string) {
+	try {
+		const followerDocRef = doc(
+			firestore,
+			'followers',
+			`${followedId}_${userId}`
+		);
+		await deleteDoc(followerDocRef);
+
+		const userDocRef = doc(firestore, 'users', userId);
+		await updateDoc(userDocRef, { followingCount: increment(-1) });
+
+		const followedUserDocRef = doc(firestore, 'users', followedId);
+		await updateDoc(followedUserDocRef, { followersCount: increment(-1) });
+
+		// For managing the followings collection
+		const followingDocRef = doc(
+			firestore,
+			'followings',
+			`${userId}_${followedId}`
+		);
+		await deleteDoc(followingDocRef);
+
+		return true;
+	} catch (error) {
+		console.error('Error unfollowing user:', error);
+		return false;
 	}
 }

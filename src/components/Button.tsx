@@ -6,9 +6,17 @@ interface ButtonProps {
 	text: string;
 	disabled?: boolean;
 	onClick?(): void;
+	backgroundColor?: string;
+	textColor?: string;
 }
 
-export default function Button({ text, disabled, onClick }: ButtonProps) {
+export default function Button({
+	text,
+	disabled,
+	onClick,
+	backgroundColor,
+	textColor,
+}: ButtonProps) {
 	const { buttonBackgroundColor, reverseTextAndIconColor } = useTheme();
 	return (
 		<ButtonBase
@@ -19,7 +27,7 @@ export default function Button({ text, disabled, onClick }: ButtonProps) {
 				px: 2,
 				py: 0.5,
 				display: 'flex',
-				bgcolor: buttonBackgroundColor,
+				bgcolor: backgroundColor ? backgroundColor : buttonBackgroundColor,
 				justifyContent: 'center',
 				alignItems: 'center',
 				borderRadius: 2.5,
@@ -27,7 +35,7 @@ export default function Button({ text, disabled, onClick }: ButtonProps) {
 		>
 			<Typography
 				sx={{
-					color: reverseTextAndIconColor,
+					color: textColor ? textColor : reverseTextAndIconColor,
 				}}
 			>
 				{text}

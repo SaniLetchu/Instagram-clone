@@ -96,7 +96,7 @@ export default function SettingsForm() {
 						sx={{
 							borderRadius: 100,
 							width: 150,
-							height: 150,
+							height: 160,
 							display: 'flex',
 							p: 1,
 							gap: 0.5,
@@ -158,7 +158,7 @@ export default function SettingsForm() {
 								style={{
 									width: 150,
 									height: 150,
-									borderRadius: 100,
+									borderRadius: '50%',
 									boxShadow: `0 0 10px 2px ${textAndIconColor}`,
 									objectFit: 'cover',
 								}}
@@ -173,7 +173,7 @@ export default function SettingsForm() {
 										style={{
 											width: 150,
 											height: 150,
-											borderRadius: 100,
+											borderRadius: '50%',
 											boxShadow: `0 0 10px 2px ${textAndIconColor}`,
 											objectFit: 'cover',
 										}}

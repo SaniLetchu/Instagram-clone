@@ -1,14 +1,15 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Timestamp } from 'firebase/firestore';
-import { PostWithId } from '../../types/firestore';
-import useTheme from '../../hooks/useTheme';
-import useAuth from '../../hooks/useAuth';
-import useUser from '../../hooks/useUser';
+import { PostWithId } from '../../../types/firestore';
+import useTheme from '../../../hooks/useTheme';
+import useAuth from '../../../hooks/useAuth';
+import useUser from '../../../hooks/useUser';
 import PostIconRoW from './PostIconRow';
 import { Send } from '@mui/icons-material';
-import { createComment } from '../../services/firestore';
+import { createComment } from '../../../services/firestore';
 import { useNavigate } from 'react-router-dom';
-import useDashboard from '../../hooks/useDashboard';
+import useDashboard from '../../../hooks/useDashboard';
+import { AccountCircle } from '@mui/icons-material';
 import {
 	Box,
 	Typography,
@@ -30,19 +31,22 @@ function timeSince(timestamp: Timestamp): string {
 	const minutes = Math.floor(seconds / 60);
 	const hours = Math.floor(minutes / 60);
 	const days = Math.floor(hours / 24);
+	const weeks = Math.floor(days / 7);
 	const months = Math.floor(days / 30);
 	const years = Math.floor(days / 365);
 
 	if (years > 0) {
 		return `${years}y`;
 	} else if (months > 0) {
-		return `${months}m`;
+		return `${months}mo`;
+	} else if (weeks > 0) {
+		return `${weeks}w`;
 	} else if (days > 0) {
 		return `${days}d`;
 	} else if (hours > 0) {
 		return `${hours}h`;
 	} else if (minutes > 0) {
-		return `${minutes}m`;
+		return `${minutes}min`;
 	} else {
 		return `${seconds}s`;
 	}
@@ -50,7 +54,12 @@ function timeSince(timestamp: Timestamp): string {
 
 export default function Post({ post }: PostProps) {
 	const { textAndIconColor, borderColor } = useTheme();
-	const { setOpenPostModal, setPostId } = useDashboard();
+	const {
+		setOpenCommentsDrawer,
+		setPostId,
+		listenUserDocument,
+		profilePicUrls,
+	} = useDashboard();
 	const { user } = useAuth();
 	const { userData } = useUser();
 	const navigate = useNavigate();
@@ -74,6 +83,12 @@ export default function Post({ post }: PostProps) {
 		}
 	};
 
+	useEffect(() => {
+		if (!(post.userId in profilePicUrls)) {
+			listenUserDocument(post.userId);
+		}
+	}, []);
+
 	return (
 		<Box
 			sx={{
@@ -87,18 +102,54 @@ export default function Post({ post }: PostProps) {
 				my: 5,
 			}}
 		>
-			<Box sx={{ display: 'flex', alignItems: 'end', gap: 1, px: 0.5 }}>
-				<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
-					<Typography sx={{ color: textAndIconColor }}>
-						<strong>{post.username}</strong>
+			<Box
+				sx={{
+					display: 'flex',
+					alignItems: 'center',
+					gap: 1,
+					paddingLeft: 0.5,
+				}}
+			>
+				{!profilePicUrls[post.userId] && (
+					<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
+						<AccountCircle sx={{ fontSize: 25, color: 'gray' }} />
+					</ButtonBase>
+				)}
+				{profilePicUrls[post.userId] && (
+					<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
+						<img
+							style={{
+								height: 25,
+								width: 25,
+								objectFit: 'cover',
+								borderRadius: '50%',
+								border: 'solid 1px',
+								borderColor: borderColor,
+							}}
+							src={profilePicUrls[post.userId] as string}
+						/>
+					</ButtonBase>
+				)}
+				<Box
+					sx={{
+						display: 'flex',
+						alignItems: 'end',
+						gap: 1,
+						px: 0.5,
+					}}
+				>
+					<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
+						<Typography sx={{ color: textAndIconColor }}>
+							<strong>{post.username}</strong>
+						</Typography>
+					</ButtonBase>
+					<Typography sx={{ color: 'rgb(142, 142, 142)' }} variant="caption">
+						•
 					</Typography>
-				</ButtonBase>
-				<Typography sx={{ color: 'rgb(142, 142, 142)' }} variant="caption">
-					•
-				</Typography>
-				<Typography sx={{ color: 'rgb(142, 142, 142)' }} variant="caption">
-					{post.timestamp && timeSince(post?.timestamp)}
-				</Typography>
+					<Typography sx={{ color: 'rgb(142, 142, 142)' }} variant="caption">
+						{post.timestamp && timeSince(post?.timestamp)}
+					</Typography>
+				</Box>
 			</Box>
 			<img
 				style={{
@@ -121,7 +172,7 @@ export default function Post({ post }: PostProps) {
 				sx={{ alignSelf: 'start', px: 0.5 }}
 				onClick={() => {
 					setPostId(post.id);
-					setOpenPostModal(true);
+					setOpenCommentsDrawer(true);
 				}}
 			>
 				<Typography sx={{ color: 'rgb(142, 142, 142)' }}>

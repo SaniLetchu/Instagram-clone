@@ -68,7 +68,7 @@ export default function ProfilePage() {
 						width: 150,
 						height: 150,
 						borderRadius: 100,
-						color: textAndIconColor,
+						color: 'gray',
 					}}
 				/>
 			)}

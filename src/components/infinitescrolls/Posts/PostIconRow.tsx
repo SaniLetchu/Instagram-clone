@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { PostWithId } from '../../types/firestore';
-import useTheme from '../../hooks/useTheme';
-import useAuth from '../../hooks/useAuth';
+import { PostWithId } from '../../../types/firestore';
+import useTheme from '../../../hooks/useTheme';
+import useAuth from '../../../hooks/useAuth';
 import { Box, IconButton } from '@mui/material';
 import { FavoriteBorder, Favorite } from '@mui/icons-material';
-import { firestore } from '../../configs/firebase';
+import { firestore } from '../../../configs/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { toggleLike } from '../../services/firestore';
+import { toggleLike } from '../../../services/firestore';
 
 interface PostIconRowProps {
 	post: PostWithId;

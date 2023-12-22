@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from '@mui/material';
 import useTheme from '../../hooks/useTheme';
-import PostsInfiniteScroll from '../../components/infinitescrolls/PostsInfiniteScroll';
+import PostsInfiniteScroll from '../../components/infinitescrolls/Posts/PostsInfiniteScroll';
 
 export default function HomePage() {
 	const { backgroundColor } = useTheme();

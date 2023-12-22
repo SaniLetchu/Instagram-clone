@@ -202,3 +202,14 @@ export async function createComment(
 		return false;
 	}
 }
+
+export async function fetchProfilePicture(userId: string) {
+	try {
+		const storageRef = ref(storage, `profilepic/${userId}`);
+		const downloadURL = await getDownloadURL(storageRef);
+		return downloadURL;
+	} catch (error) {
+		console.error('Error fetching profile picture:', error);
+		return null;
+	}
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { firestore } from '../../configs/firebase';
+import { firestore } from '../../../configs/firebase';
 import {
 	collection,
 	query,
@@ -11,7 +11,7 @@ import {
 	getDocs,
 	DocumentSnapshot,
 } from 'firebase/firestore';
-import { Post as PostType, PostWithId } from '../../types/firestore';
+import { Post as PostType, PostWithId } from '../../../types/firestore';
 import Post from './Post';
 
 export default function PostsInfiniteScroll() {
@@ -122,7 +122,6 @@ export default function PostsInfiniteScroll() {
 			{posts.map((post) => (
 				<Post key={post.id} post={post} />
 			))}
-			{loading && <p>Loading...</p>}
 		</div>
 	);
 }

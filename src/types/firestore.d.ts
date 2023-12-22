@@ -53,3 +53,5 @@ export type Following = {
 };
 
 export type PostWithId = Post & { id: string };
+export type CommentWithId = Comment & { id: string };
+export type UserWithId = User & { id: string };

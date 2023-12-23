@@ -45,7 +45,6 @@ export default function CreatePostForm() {
 		<Formik
 			initialValues={initialValues}
 			onSubmit={async (values, actions) => {
-				console.log(222);
 				actions.setSubmitting(true);
 				const success = await createPost(
 					values.caption,

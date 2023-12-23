@@ -25,6 +25,7 @@ export default function UsernameModal() {
 		borderRadius: 2,
 		boxShadow: 24,
 		py: 1,
+		outline: 'none',
 	};
 
 	return (

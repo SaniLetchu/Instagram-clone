@@ -155,7 +155,7 @@ export default function Post({ post }: PostProps) {
 				style={{
 					objectFit: 'contain',
 					width: 'calc(100% - 2px)',
-					maxHeight: 650,
+					maxHeight: 800,
 					borderRadius: 5,
 					border: `solid 1px ${borderColor}`,
 				}}

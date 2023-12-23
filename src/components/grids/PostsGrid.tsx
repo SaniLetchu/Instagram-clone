@@ -158,22 +158,23 @@ export default function PostsGrid({ userId }: PostsGridProps) {
 						position: 'relative',
 						width: '100%',
 						aspectRatio: '1 / 1',
-						overflow: 'hidden', // Ensure the overlay stays within the grid item
+						overflow: 'hidden',
 					}}
 				>
 					<img
 						src={post.imageUrl}
 						style={{ width: '100%', height: '100%', objectFit: 'cover' }}
 					/>
-					{/* Overlay div */}
-					<div
-						style={{
+					<Box
+						sx={{
+							marginTop: 0.5,
+							marginLeft: 0.5,
 							position: 'absolute',
 							top: 0,
 							left: 0,
 							width: '100%',
 							height: '100%',
-							backgroundColor: 'rgba(0, 0, 0, 0.5)', // Change this color and opacity as needed
+							backgroundColor: 'rgba(0, 0, 0, 0.5)',
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
@@ -219,7 +220,7 @@ export default function PostsGrid({ userId }: PostsGridProps) {
 								</Typography>
 							</Box>
 						</Box>
-					</div>
+					</Box>
 				</Grid>
 			))}
 		</Grid>

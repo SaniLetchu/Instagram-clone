@@ -1,8 +1,13 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Button, TextField, Grid, Typography } from '@mui/material';
-import { isUsernameAvailable, createUserDocument } from '../../services/firestore';
+import { Grid, Typography } from '@mui/material';
+import {
+	isUsernameAvailable,
+	createUserDocument,
+} from '../../services/firestore';
 import useAuth from '../../hooks/useAuth';
+import useTheme from '../../hooks/useTheme';
+import Button from '../Button';
 import * as Yup from 'yup';
 
 const initialValues = {
@@ -17,6 +22,8 @@ const validationSchema = Yup.object().shape({
 
 export default function UsernameForm() {
 	const { user } = useAuth();
+	const { secondaryBackgroundColor, textAndIconColor, borderColor } =
+		useTheme();
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -40,25 +47,50 @@ export default function UsernameForm() {
 			}}
 			validationSchema={validationSchema}
 		>
-			{({ isSubmitting, errors, touched, status }) => (
-				<Form>
+			{({ isSubmitting, errors, touched, status, setFieldValue }) => (
+				<Form
+					style={{
+						display: 'flex',
+						flexDirection: 'column',
+						width: '100%',
+						alignItems: 'center',
+					}}
+				>
 					<Grid container direction="column" spacing={1}>
-						<Grid item>
+						<Grid
+							item
+							sx={{
+								display: 'flex',
+								justifyContent: 'center',
+								flexDirection: 'column',
+								mx: 5,
+							}}
+						>
 							<Field
-								style={{
-									backgroundColor: 'rgb(250, 250, 250)',
-									border: '1px solid rgb(219, 219, 219)',
-									borderRadius: 4,
-								}}
-								size="small"
-								InputProps={{
-									disableUnderline: true,
-								}}
+								aria-label="empty textarea"
+								placeholder="Username"
+								maxLength={50}
 								name="username"
-								as={TextField}
-								label="Username"
-								variant="filled"
-								fullWidth
+								type="username"
+								style={{
+									marginBottom: 20,
+									marginTop: 20,
+									fontSize: 15,
+									borderRadius: 5,
+									border: `1px solid ${borderColor}`,
+									backgroundColor: secondaryBackgroundColor,
+									color: textAndIconColor,
+									outline: 'none',
+								}}
+								onChange={(event: any) => {
+									setFieldValue(
+										'username',
+										event &&
+											event.currentTarget &&
+											event.currentTarget.value &&
+											event.currentTarget.value
+									);
+								}}
 							/>
 							{errors.username && touched.username && (
 								<Typography
@@ -68,16 +100,17 @@ export default function UsernameForm() {
 								</Typography>
 							)}
 						</Grid>
-						<Grid item my={1}>
-							<Button
-								type="submit"
-								variant="contained"
-								color="primary"
-								fullWidth
-								disabled={isSubmitting}
-							>
-								Select
-							</Button>
+						<Grid
+							item
+							my={1}
+							sx={{
+								display: 'flex',
+								justifyContent: 'center',
+								flexDirection: 'column',
+								mx: 5,
+							}}
+						>
+							<Button disabled={isSubmitting} text="Select" />
 							{status && status.message && (
 								<Typography
 									sx={{ color: 'red', textAlign: 'center', fontSize: 12 }}

@@ -1,24 +1,31 @@
 import * as React from 'react';
+import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import useUser from '../../hooks/useUser';
 import UsernameForm from '../forms/UsernameForm';
-
-const style = {
-	position: 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)',
-	width: 250,
-	bgcolor: 'background.paper',
-	border: '2px solid #000',
-	boxShadow: 24,
-	p: 2,
-};
+import useTheme from '../../hooks/useTheme';
 
 export default function UsernameModal() {
 	const { isNewAccount } = useUser();
+	const { secondaryBackgroundColor, textAndIconColor, borderColor } =
+		useTheme();
+
+	const style = {
+		position: 'absolute',
+		display: 'flex',
+		flexDirection: 'column',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		alignItems: 'center',
+		width: 300,
+		bgcolor: secondaryBackgroundColor,
+		borderRadius: 2,
+		boxShadow: 24,
+		py: 1,
+	};
 
 	return (
 		<Modal
@@ -29,22 +36,18 @@ export default function UsernameModal() {
 		>
 			<Box sx={style}>
 				<Typography
-					id="modal-modal-title"
-					textAlign={'center'}
-					variant="h5"
-					component="h2"
+					variant="h6"
+					sx={{ textAlign: 'center', color: textAndIconColor }}
 				>
-					Welcome to instagram!
+					Welcome to instagram
 				</Typography>
+				<Divider sx={{ width: '100%', color: borderColor, my: 1 }} />
 				<Typography
-					id="modal-modal-title"
-					textAlign={'center'}
-					variant="subtitle1"
-					component="h2"
+					variant="overline"
+					sx={{ textAlign: 'center', color: textAndIconColor }}
 				>
 					Please choose your username
 				</Typography>
-
 				<UsernameForm />
 			</Box>
 		</Modal>

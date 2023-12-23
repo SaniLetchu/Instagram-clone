@@ -174,7 +174,7 @@ export default function CommentsInfiniteScroll() {
 				}}
 			>
 				{comments.map((comment) => (
-					<Comment comment={comment} />
+					<Comment key={comment.id} comment={comment} />
 				))}
 			</List>
 		</SwipeableDrawer>

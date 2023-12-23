@@ -12,7 +12,7 @@ interface DashboardContextInterface {
 	setPostId: React.Dispatch<React.SetStateAction<string>>;
 	openCommentsDrawer: boolean;
 	setOpenCommentsDrawer: React.Dispatch<React.SetStateAction<boolean>>;
-	profilePicUrls: Record<string, string | null | undefined>;
+	usersData: Record<string, User>;
 	listenUserDocument: (userId: string) => void;
 }
 
@@ -29,17 +29,23 @@ export default function DashboardProvider({ children }: DashboardProps) {
 	const [openPostModal, setOpenPostModal] = useState(false);
 	const [postId, setPostId] = useState('');
 	const [openCommentsDrawer, setOpenCommentsDrawer] = useState(false);
-	const [profilePicUrls, setProfilePicUrls] = useState<
-		Record<string, string | null | undefined>
-	>({});
+	const [usersData, setUsersData] = useState<Record<string, User>>({});
 	const [unsubscribes, setUnsubscribes] = useState<(() => void)[]>([]);
 
 	const listenUserDocument = async (userId: string) => {
-		if (!(userId in profilePicUrls)) {
+		if (!(userId in usersData)) {
 			//Insert some data immediatelly so we avoid multiple listeners if this function is called multiple times in a short time
-			setProfilePicUrls((prevProfilePicUrls) => ({
-				...prevProfilePicUrls,
-				[userId]: null,
+			setUsersData((prevUsersData) => ({
+				...prevUsersData,
+				[userId]: {
+					username: '',
+					email: '',
+					profileImageUrl: null,
+					bio: '',
+					postCount: 0,
+					followersCount: 0,
+					followingCount: 0,
+				},
 			}));
 
 			const userRef = doc(firestore, 'users', userId);
@@ -47,9 +53,9 @@ export default function DashboardProvider({ children }: DashboardProps) {
 			const unsubscribeSnapshot = onSnapshot(userRef, (docSnapshot) => {
 				const userData: User = docSnapshot.data() as User;
 
-				setProfilePicUrls((prevProfilePicUrls) => ({
-					...prevProfilePicUrls,
-					[docSnapshot.id]: userData.profileImageUrl,
+				setUsersData((prevUsersData) => ({
+					...prevUsersData,
+					[userId]: userData,
 				}));
 
 				setUnsubscribes((prevUnsubscribes) => [
@@ -79,15 +85,9 @@ export default function DashboardProvider({ children }: DashboardProps) {
 			openCommentsDrawer,
 			setOpenCommentsDrawer,
 			listenUserDocument,
-			profilePicUrls,
+			usersData,
 		}),
-		[
-			openCreatePostModal,
-			postId,
-			openPostModal,
-			openCommentsDrawer,
-			profilePicUrls,
-		]
+		[openCreatePostModal, postId, openPostModal, openCommentsDrawer, usersData]
 	);
 
 	return (

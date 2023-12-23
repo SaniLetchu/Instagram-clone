@@ -54,12 +54,8 @@ function timeSince(timestamp: Timestamp): string {
 
 export default function Post({ post }: PostProps) {
 	const { textAndIconColor, borderColor } = useTheme();
-	const {
-		setOpenCommentsDrawer,
-		setPostId,
-		listenUserDocument,
-		profilePicUrls,
-	} = useDashboard();
+	const { setOpenCommentsDrawer, setPostId, listenUserDocument, usersData } =
+		useDashboard();
 	const { user } = useAuth();
 	const { userData } = useUser();
 	const navigate = useNavigate();
@@ -84,7 +80,7 @@ export default function Post({ post }: PostProps) {
 	};
 
 	useEffect(() => {
-		if (!(post.userId in profilePicUrls)) {
+		if (!(post.userId in usersData)) {
 			listenUserDocument(post.userId);
 		}
 	}, []);
@@ -110,25 +106,29 @@ export default function Post({ post }: PostProps) {
 					paddingLeft: 0.5,
 				}}
 			>
-				{!profilePicUrls[post.userId] && (
-					<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
-						<AccountCircle sx={{ fontSize: 25, color: 'gray' }} />
-					</ButtonBase>
-				)}
-				{profilePicUrls[post.userId] && (
-					<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
-						<img
-							style={{
-								height: 25,
-								width: 25,
-								objectFit: 'cover',
-								borderRadius: '50%',
-								border: 'solid 1px',
-								borderColor: borderColor,
-							}}
-							src={profilePicUrls[post.userId] as string}
-						/>
-					</ButtonBase>
+				{usersData[post.userId] && (
+					<>
+						{!usersData[post.userId].profileImageUrl && (
+							<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
+								<AccountCircle sx={{ fontSize: 25, color: 'gray' }} />
+							</ButtonBase>
+						)}
+						{usersData[post.userId].profileImageUrl && (
+							<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
+								<img
+									style={{
+										height: 25,
+										width: 25,
+										objectFit: 'cover',
+										borderRadius: '50%',
+										border: 'solid 1px',
+										borderColor: borderColor,
+									}}
+									src={usersData[post.userId].profileImageUrl as string}
+								/>
+							</ButtonBase>
+						)}
+					</>
 				)}
 				<Box
 					sx={{

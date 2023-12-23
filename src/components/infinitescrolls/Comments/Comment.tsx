@@ -41,17 +41,13 @@ function timeSince(timestamp: Timestamp): string {
 }
 
 export default function Comment({ comment }: CommentProps) {
-	const {
-		listenUserDocument,
-		profilePicUrls,
-		setOpenCommentsDrawer,
-		setPostId,
-	} = useDashboard();
+	const { listenUserDocument, usersData, setOpenCommentsDrawer, setPostId } =
+		useDashboard();
 	const { borderColor, textAndIconColor } = useTheme();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!(comment.userId in profilePicUrls)) {
+		if (!(comment.userId in usersData)) {
 			listenUserDocument(comment.userId);
 		}
 	}, []);
@@ -65,37 +61,41 @@ export default function Comment({ comment }: CommentProps) {
 				px: 2,
 			}}
 		>
-			{!profilePicUrls[comment.userId] && (
-				<ButtonBase
-					onClick={() => {
-						navigate(`/profile/${comment.userId}`);
-						setOpenCommentsDrawer(false);
-						setPostId('');
-					}}
-				>
-					<AccountCircle sx={{ fontSize: 38, color: 'gray' }} />
-				</ButtonBase>
-			)}
-			{profilePicUrls[comment.userId] && (
-				<ButtonBase
-					onClick={() => {
-						navigate(`/profile/${comment.userId}`);
-						setOpenCommentsDrawer(false);
-						setPostId('');
-					}}
-				>
-					<img
-						style={{
-							height: 38,
-							width: 38,
-							objectFit: 'cover',
-							borderRadius: '50%',
-							border: 'solid 1px',
-							borderColor: borderColor,
-						}}
-						src={profilePicUrls[comment.userId] as string}
-					/>
-				</ButtonBase>
+			{usersData[comment.userId] && (
+				<>
+					{!usersData[comment.userId].profileImageUrl && (
+						<ButtonBase
+							onClick={() => {
+								navigate(`/profile/${comment.userId}`);
+								setOpenCommentsDrawer(false);
+								setPostId('');
+							}}
+						>
+							<AccountCircle sx={{ fontSize: 38, color: 'gray' }} />
+						</ButtonBase>
+					)}
+					{usersData[comment.userId].profileImageUrl && (
+						<ButtonBase
+							onClick={() => {
+								navigate(`/profile/${comment.userId}`);
+								setOpenCommentsDrawer(false);
+								setPostId('');
+							}}
+						>
+							<img
+								style={{
+									height: 38,
+									width: 38,
+									objectFit: 'cover',
+									borderRadius: '50%',
+									border: 'solid 1px',
+									borderColor: borderColor,
+								}}
+								src={usersData[comment.userId].profileImageUrl as string}
+							/>
+						</ButtonBase>
+					)}
+				</>
 			)}
 			<Box
 				sx={{

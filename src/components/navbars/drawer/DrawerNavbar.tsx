@@ -133,7 +133,7 @@ export default function DrawerNavbar() {
 					<DrawerButton
 						IconComponent={AccountCircle}
 						text="Profile"
-						path="/profile"
+						path={`/profile/${user?.uid}`}
 					/>
 				</ButtonBase>
 				<Box sx={{ flexGrow: 1 }} />

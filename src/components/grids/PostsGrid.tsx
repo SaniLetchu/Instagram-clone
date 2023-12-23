@@ -12,7 +12,8 @@ import {
 	DocumentSnapshot,
 	where,
 } from 'firebase/firestore';
-import { Grid } from '@mui/material';
+import { Grid, Typography, Box } from '@mui/material';
+import { ModeCommentRounded, Favorite } from '@mui/icons-material';
 import { Post as PostType, PostWithId } from '../../types/firestore';
 
 interface PostsGridProps {
@@ -25,6 +26,14 @@ const marginBottom = {
 	md: 0,
 	lg: 0,
 	xl: 0,
+};
+
+const gapSize = {
+	xs: 4,
+	sm: 4,
+	md: 6,
+	lg: 8,
+	xl: 10,
 };
 
 export default function PostsGrid({ userId }: PostsGridProps) {
@@ -145,12 +154,72 @@ export default function PostsGrid({ userId }: PostsGridProps) {
 					key={post.id}
 					item
 					xs={4}
-					sx={{ width: '100%', aspectRatio: '1 / 1' }}
+					sx={{
+						position: 'relative',
+						width: '100%',
+						aspectRatio: '1 / 1',
+						overflow: 'hidden', // Ensure the overlay stays within the grid item
+					}}
 				>
 					<img
 						src={post.imageUrl}
 						style={{ width: '100%', height: '100%', objectFit: 'cover' }}
 					/>
+					{/* Overlay div */}
+					<div
+						style={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '100%',
+							height: '100%',
+							backgroundColor: 'rgba(0, 0, 0, 0.5)', // Change this color and opacity as needed
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							opacity: 0,
+							transition: 'opacity 0.3s ease',
+						}}
+						onMouseEnter={(e) => {
+							e.currentTarget.style.opacity = '1';
+						}}
+						onMouseLeave={(e) => {
+							e.currentTarget.style.opacity = '0';
+						}}
+					>
+						<Box
+							sx={{
+								color: 'white',
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'center',
+								gap: gapSize,
+							}}
+						>
+							<Box sx={{ display: 'flex', gap: 0.5 }}>
+								<Favorite
+									sx={{
+										color: 'white',
+									}}
+									fontSize="medium"
+								/>
+								<Typography sx={{ color: 'white' }}>
+									<strong>{post.likesCount}</strong>
+								</Typography>
+							</Box>
+							<Box sx={{ display: 'flex', gap: 0.5 }}>
+								<ModeCommentRounded
+									sx={{
+										color: 'white',
+									}}
+									fontSize="medium"
+								/>
+								<Typography sx={{ color: 'white' }}>
+									<strong>{post.commentsCount}</strong>
+								</Typography>
+							</Box>
+						</Box>
+					</div>
 				</Grid>
 			))}
 		</Grid>

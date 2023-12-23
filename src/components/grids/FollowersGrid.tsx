@@ -11,7 +11,7 @@ import {
 	DocumentSnapshot,
 	where,
 } from 'firebase/firestore';
-import { Grid, ButtonBase, Typography } from '@mui/material';
+import { Grid, ButtonBase, Typography, Box } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import useDashboard from '../../hooks/useDashboard';
@@ -21,6 +21,14 @@ import { Follower, FollowerWithId } from '../../types/firestore';
 interface FollowersGridProps {
 	userId: string;
 }
+
+const imageSize = {
+	xs: 100,
+	sm: 115,
+	md: 130,
+	lg: 145,
+	xl: 160,
+};
 
 export default function FollowersGrid({ userId }: FollowersGridProps) {
 	const [followers, setFollowers] = useState<FollowerWithId[]>([]);
@@ -200,10 +208,11 @@ export default function FollowersGrid({ userId }: FollowersGridProps) {
 										flexDirection: 'column',
 									}}
 								>
-									<img
-										style={{
-											height: 130,
-											width: 130,
+									<Box
+										component="img"
+										sx={{
+											height: imageSize,
+											width: imageSize,
 											objectFit: 'cover',
 											borderRadius: '50%',
 											border: 'solid 1px',

@@ -19,6 +19,14 @@ interface PostsGridProps {
 	userId: string;
 }
 
+const marginBottom = {
+	xs: 6,
+	sm: 0,
+	md: 0,
+	lg: 0,
+	xl: 0,
+};
+
 export default function PostsGrid({ userId }: PostsGridProps) {
 	const [posts, setPosts] = useState<PostWithId[]>([]);
 	const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null);
@@ -129,7 +137,7 @@ export default function PostsGrid({ userId }: PostsGridProps) {
 		<Grid
 			container
 			justifyContent="flex-start"
-			sx={{ px: 2, py: 2 }}
+			sx={{ px: 2, py: 2, marginBottom: marginBottom }}
 			spacing={0.5}
 		>
 			{posts.map((post) => (

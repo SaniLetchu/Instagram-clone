@@ -186,7 +186,7 @@ export default function FollowersGrid({ userId }: FollowersGridProps) {
 										flexDirection: 'column',
 									}}
 								>
-									<AccountCircle sx={{ fontSize: 130, color: 'gray' }} />
+									<AccountCircle sx={{ fontSize: imageSize, color: 'gray' }} />
 									<Typography sx={{ color: textAndIconColor }}>
 										<strong>
 											{usersData[follower.followerUserId].username}

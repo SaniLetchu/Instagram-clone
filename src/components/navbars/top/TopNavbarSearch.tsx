@@ -18,7 +18,7 @@ export default function TopNavbarSearch() {
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(event.target.value);
-		setAnchorEl(event.currentTarget);
+		setAnchorEl(drawerRef.current);
 		clearTimeout(timeoutRef?.current);
 		timeoutRef.current = setTimeout(async () => {
 			setUsers([]);

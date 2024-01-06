@@ -285,8 +285,8 @@ export async function searchForUser(searchString: string) {
 		const querySnapshot = await getDocs(
 			query(
 				usersRef,
-				where('username', '>=', searchString),
-				where('username', '<=', searchString + '\uf8ff'),
+				where('username', '>=', searchString.toLowerCase()),
+				where('username', '<=', searchString.toLowerCase() + '\uf8ff'),
 				limit(5)
 			)
 		);

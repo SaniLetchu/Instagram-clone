@@ -27,21 +27,34 @@ export default function SearchPopover({
 	setSearchValue,
 	setUsers,
 }: SearchPopoverProps) {
-	const { theme, backgroundColor } = useTheme();
+	const { theme } = useTheme();
 	const boxShadow =
 		theme === 'dark'
 			? '1px 0px 1px rgba(250, 250, 250, 0.2)'
 			: '1px 0px 1px rgba(0, 0, 0, 0.2)';
 
+	const backgroundColor =
+		theme === 'dark' ? 'rgb(38, 38, 38)' : 'rgb(239, 239, 239)';
+
 	return (
 		<Popover
 			anchorEl={anchorEl}
+			disableAutoFocus
+			disableEnforceFocus
 			disablePortal
+			disableScrollLock
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'left',
+			}}
+			PaperProps={{
+				style: {
+					width: 210,
+				},
+			}}
 			sx={{
-				width: 245,
 				flexShrink: 0,
 				'& .MuiDrawer-paper': {
-					width: 245,
 					boxSizing: 'border-box',
 					border: 'none',
 					boxShadow: boxShadow,

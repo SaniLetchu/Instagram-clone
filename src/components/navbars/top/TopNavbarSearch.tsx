@@ -1,34 +1,63 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import useTheme from '../../../hooks/useTheme';
+import SearchPopover from './SearchPopover';
+import { searchForUser } from '../../../services/firestore';
+import { UserWithId } from '../../../types/firestore';
 
-interface TopNavbarSearchProps {
-	onSearch(searchValue: string): void;
-}
-
-export default function TopNavbarSearch({ onSearch }: TopNavbarSearchProps) {
+export default function TopNavbarSearch() {
 	const [searchValue, setSearchValue] = useState('');
-	const { reverseTextAndIconColor, textInputBackgroundColor } = useTheme();
+	const openPopover = searchValue.trim() !== '' ? true : false;
+	const [anchorEl, setAnchorEl] = useState<HTMLInputElement | null>(null);
+	const [observerValue, setObserverValue] = useState<ResizeObserver>();
+	const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+	const drawerRef = useRef(null);
+	const [users, setUsers] = useState<UserWithId[]>([]);
+	const { textAndIconColor, textInputBackgroundColor } = useTheme();
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(event.target.value);
+		setAnchorEl(event.currentTarget);
+		clearTimeout(timeoutRef?.current);
+		timeoutRef.current = setTimeout(async () => {
+			setUsers([]);
+			if (event.target.value !== '') {
+				const userValues = await searchForUser(event.target.value);
+				setUsers(userValues);
+			}
+		}, 500);
 	};
 
-	const handleSubmit = (event: ChangeEvent<HTMLInputElement>) => {
-		event.preventDefault();
-		if (searchValue) {
-			onSearch(searchValue);
-		}
-	};
+	useEffect(() => {
+		const resizeObserver = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				const { width, height } = entry.contentRect;
+				if (width === 0 || height === 0) {
+					setSearchValue('');
+					setUsers([]);
+				}
+			}
+		});
+		setObserverValue(resizeObserver);
+
+		setTimeout(() => {
+			if (drawerRef.current) {
+				observerValue?.observe(drawerRef.current);
+			}
+		}, 500);
+
+		return () => {
+			observerValue?.disconnect();
+		};
+	}, [drawerRef]);
 
 	return (
 		<Box
-			component="form"
-			onSubmit={handleSubmit}
 			display="flex"
 			alignItems="center"
 			justifyContent="center"
+			ref={drawerRef}
 		>
 			<TextField
 				value={searchValue}
@@ -41,7 +70,7 @@ export default function TopNavbarSearch({ onSearch }: TopNavbarSearchProps) {
 					borderRadius: 2,
 					bgcolor: textInputBackgroundColor,
 					input: {
-						color: reverseTextAndIconColor,
+						color: textAndIconColor,
 						'&::placeholder': {
 							color: 'rgb(142, 142, 142)',
 						},
@@ -58,6 +87,13 @@ export default function TopNavbarSearch({ onSearch }: TopNavbarSearchProps) {
 					),
 					disableUnderline: true,
 				}}
+			/>
+			<SearchPopover
+				anchorEl={anchorEl}
+				openPopover={openPopover}
+				users={users}
+				setUsers={setUsers}
+				setSearchValue={setSearchValue}
 			/>
 		</Box>
 	);

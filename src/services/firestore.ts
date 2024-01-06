@@ -6,6 +6,7 @@ import {
 	collection,
 	where,
 	getDoc,
+	limit,
 	deleteDoc,
 	addDoc,
 	setDoc,
@@ -23,6 +24,7 @@ import {
 	Comment,
 	Follower,
 	Following,
+	UserWithId,
 } from '../types/firestore';
 
 const usersRef = collection(firestore, 'users');
@@ -275,5 +277,29 @@ export async function unFollowUser(userId: string, followedId: string) {
 	} catch (error) {
 		console.error('Error unfollowing user:', error);
 		return false;
+	}
+}
+
+export async function searchForUser(searchString: string) {
+	try {
+		const querySnapshot = await getDocs(
+			query(
+				usersRef,
+				where('username', '>=', searchString),
+				where('username', '<=', searchString + '\uf8ff'),
+				limit(5)
+			)
+		);
+
+		const users: UserWithId[] = [];
+		querySnapshot.forEach((document) => {
+			const userData = document.data() as UserWithId;
+			const userWithId = { ...userData, id: document.id };
+			users.push(userWithId);
+		});
+		return users;
+	} catch (error) {
+		console.error('Error searching for users:', error);
+		return [];
 	}
 }

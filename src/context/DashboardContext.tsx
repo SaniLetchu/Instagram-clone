@@ -14,6 +14,8 @@ interface DashboardContextInterface {
 	setOpenCommentsDrawer: React.Dispatch<React.SetStateAction<boolean>>;
 	usersData: Record<string, User>;
 	listenUserDocument: (userId: string) => void;
+	openSearchDrawer: boolean;
+	setOpenSearchDrawer: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface DashboardProps {
@@ -27,6 +29,8 @@ export const DashboardContext = createContext<DashboardContextInterface>(
 export default function DashboardProvider({ children }: DashboardProps) {
 	const [openCreatePostModal, setOpenCreatePostModal] = useState(false);
 	const [openPostModal, setOpenPostModal] = useState(false);
+	const [openSearchDrawer, setOpenSearchDrawer] = useState(false);
+	const [openSearchPopover, setOpenSearchPopover] = useState(false);
 	const [postId, setPostId] = useState('');
 	const [openCommentsDrawer, setOpenCommentsDrawer] = useState(false);
 	const [usersData, setUsersData] = useState<Record<string, User>>({});
@@ -86,8 +90,17 @@ export default function DashboardProvider({ children }: DashboardProps) {
 			setOpenCommentsDrawer,
 			listenUserDocument,
 			usersData,
+			setOpenSearchDrawer,
+			openSearchDrawer,
 		}),
-		[openCreatePostModal, postId, openPostModal, openCommentsDrawer, usersData]
+		[
+			openCreatePostModal,
+			postId,
+			openPostModal,
+			openCommentsDrawer,
+			usersData,
+			openSearchDrawer,
+		]
 	);
 
 	return (

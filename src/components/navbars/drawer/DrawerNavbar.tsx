@@ -27,7 +27,12 @@ const drawerDisplay = {
 
 export default function DrawerNavbar() {
 	const { theme, backgroundColor, secondaryBackgroundColor } = useTheme();
-	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
+	const {
+		setOpenCreatePostModal,
+		openCreatePostModal,
+		openSearchDrawer,
+		setOpenSearchDrawer,
+	} = useDashboard();
 	const navigate = useNavigate();
 	const { user } = useAuth();
 	const boxShadow =
@@ -88,9 +93,13 @@ export default function DrawerNavbar() {
 								theme === 'dark' ? 'rgb(20, 20, 20)' : 'rgb(220, 220, 220)',
 						},
 					}}
-					onClick={() => console.log('search')}
+					onClick={() => setOpenSearchDrawer(true)}
 				>
-					<DrawerButton IconComponent={Search} text="Search" />
+					<DrawerButton
+						IconComponent={Search}
+						text="Search"
+						selectionBoolean={openSearchDrawer}
+					/>
 				</ButtonBase>
 				<ButtonBase
 					sx={{

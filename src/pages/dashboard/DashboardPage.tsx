@@ -12,6 +12,7 @@ import SettingsPage from './SettingsPage';
 import UsernameModal from '../../components/modals/UsernameModal';
 import CreatePostModal from '../../components/modals/CreatePostModal';
 import CommentsInfiniteScroll from '../../components/infinitescrolls/Comments/CommentsInfiniteScroll';
+import SearchDrawer from '../../components/navbars/drawer/SearchDrawer';
 
 const flexDirection = {
 	xs: 'column',
@@ -44,6 +45,7 @@ export default function DashboardPage() {
 			<CreatePostModal />
 			<UsernameModal />
 			<DrawerNavbar />
+			<SearchDrawer />
 			<CommentsInfiniteScroll />
 			<TopNavbar />
 			<Container

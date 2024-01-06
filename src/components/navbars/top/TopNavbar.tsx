@@ -12,11 +12,6 @@ const topNavbarDisplay = {
 	xl: 'none',
 };
 
-const handleSearch = (searchValue: string) => {
-	console.log('Search for:', searchValue);
-	// Perform your search logic here
-};
-
 export default function TopNavbar() {
 	const { theme, backgroundColor } = useTheme();
 	const boxShadow =
@@ -40,7 +35,7 @@ export default function TopNavbar() {
 			>
 				<TopNavbarLogo />
 				<Box sx={{ flexGrow: 1, minWidth: 15 }} />
-				<TopNavbarSearch onSearch={handleSearch} />
+				<TopNavbarSearch />
 			</Toolbar>
 		</AppBar>
 	);

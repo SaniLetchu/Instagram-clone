@@ -49,13 +49,15 @@ export default function SearchPopover({
 			}}
 			PaperProps={{
 				style: {
-					width: 210,
+					minWidth: 'inherit',
 				},
 			}}
 			sx={{
 				flexShrink: 0,
+				minWidth: 'inherit',
 				'& .MuiDrawer-paper': {
 					boxSizing: 'border-box',
+					minWidth: 'inherit',
 					border: 'none',
 					boxShadow: boxShadow,
 				},
@@ -71,6 +73,7 @@ export default function SearchPopover({
 				sx={{
 					bgcolor: backgroundColor,
 					display: 'flex',
+					minWidth: 210,
 					flexDirection: 'column',
 					alignItems: 'flex-start',
 					flexGrow: 1,

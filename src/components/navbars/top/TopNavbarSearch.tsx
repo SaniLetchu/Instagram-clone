@@ -58,6 +58,7 @@ export default function TopNavbarSearch() {
 			alignItems="center"
 			justifyContent="center"
 			ref={drawerRef}
+			sx={{ width: 210 }}
 		>
 			<TextField
 				value={searchValue}
@@ -65,7 +66,6 @@ export default function TopNavbarSearch() {
 				fullWidth
 				variant="standard"
 				placeholder="Search"
-				size="small"
 				sx={{
 					borderRadius: 2,
 					bgcolor: textInputBackgroundColor,

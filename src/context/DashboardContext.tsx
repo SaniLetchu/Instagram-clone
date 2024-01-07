@@ -30,7 +30,6 @@ export default function DashboardProvider({ children }: DashboardProps) {
 	const [openCreatePostModal, setOpenCreatePostModal] = useState(false);
 	const [openPostModal, setOpenPostModal] = useState(false);
 	const [openSearchDrawer, setOpenSearchDrawer] = useState(false);
-	const [openSearchPopover, setOpenSearchPopover] = useState(false);
 	const [postId, setPostId] = useState('');
 	const [openCommentsDrawer, setOpenCommentsDrawer] = useState(false);
 	const [usersData, setUsersData] = useState<Record<string, User>>({});

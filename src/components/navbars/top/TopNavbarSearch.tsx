@@ -6,6 +6,14 @@ import SearchPopover from './SearchPopover';
 import { searchForUser } from '../../../services/firestore';
 import { UserWithId } from '../../../types/firestore';
 
+const boxSize = {
+	xs: 210,
+	sm: 0,
+	md: 0,
+	lg: 0,
+	xl: 0,
+};
+
 export default function TopNavbarSearch() {
 	const [searchValue, setSearchValue] = useState('');
 	const openPopover = searchValue.trim() !== '' ? true : false;
@@ -58,7 +66,7 @@ export default function TopNavbarSearch() {
 			alignItems="center"
 			justifyContent="center"
 			ref={drawerRef}
-			sx={{ width: 210 }}
+			sx={{ width: boxSize }}
 		>
 			<TextField
 				value={searchValue}

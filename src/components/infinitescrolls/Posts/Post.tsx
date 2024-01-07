@@ -165,8 +165,16 @@ export default function Post({ post }: PostProps) {
 			<Typography sx={{ color: textAndIconColor, px: 0.5 }}>
 				<strong>{post.likesCount} likes</strong>
 			</Typography>
-			<Typography sx={{ color: textAndIconColor, px: 0.5 }}>
-				<strong>{post.username}</strong> {post.caption}
+			<Typography
+				sx={{ color: textAndIconColor, px: 0.5, display: 'flex', gap: 1 }}
+			>
+				<ButtonBase onClick={() => navigate(`/profile/${post.userId}`)}>
+					<Typography sx={{ color: textAndIconColor }}>
+						<strong>{post.username}</strong>
+					</Typography>
+					<ButtonBase />
+				</ButtonBase>
+				{post.caption}
 			</Typography>
 			<ButtonBase
 				sx={{ alignSelf: 'start', px: 0.5 }}

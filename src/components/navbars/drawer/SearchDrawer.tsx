@@ -87,6 +87,7 @@ export default function SearchDrawer() {
 	return (
 		<Drawer
 			ref={drawerRef}
+			disableScrollLock
 			sx={{
 				width: 245,
 				flexShrink: 0,

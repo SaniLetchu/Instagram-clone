@@ -9,7 +9,7 @@ const drawerDisplay = {
 	sm: 'none',
 	md: 'none',
 	lg: 'none',
-	xl: 'noe',
+	xl: 'none',
 };
 
 interface SearchPopoverProps {

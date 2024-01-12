@@ -90,7 +90,7 @@ export default function ProfilePage() {
 	}, [userId]);
 
 	return (
-		<>
+		<Box sx={{ minHeight: '100vh' }}>
 			<Container
 				maxWidth={false}
 				disableGutters
@@ -246,10 +246,13 @@ export default function ProfilePage() {
 						sx={{
 							height: '100%',
 							'&:hover': {
-								backgroundColor: 'rgba(169, 169, 169, 0.2)',
+								backgroundColor:
+									tabIndex == 0
+										? 'rgba(169, 169, 169, 0.2)'
+										: 'rgba(169, 169, 169, 0.1)',
 							},
 							backgroundColor:
-								tabIndex == 0 ? 'rgba(169, 169, 169, 0.1)' : 'inherit',
+								tabIndex == 0 ? 'rgba(169, 169, 169, 0.2)' : 'inherit',
 						}}
 					>
 						<Box
@@ -279,10 +282,13 @@ export default function ProfilePage() {
 						sx={{
 							height: '100%',
 							'&:hover': {
-								backgroundColor: 'rgba(169, 169, 169, 0.2)',
+								backgroundColor:
+									tabIndex == 1
+										? 'rgba(169, 169, 169, 0.2)'
+										: 'rgba(169, 169, 169, 0.1)',
 							},
 							backgroundColor:
-								tabIndex == 1 ? 'rgba(169, 169, 169, 0.1)' : 'inherit',
+								tabIndex == 1 ? 'rgba(169, 169, 169, 0.2)' : 'inherit',
 						}}
 					>
 						<Box
@@ -312,10 +318,13 @@ export default function ProfilePage() {
 						sx={{
 							height: '100%',
 							'&:hover': {
-								backgroundColor: 'rgba(169, 169, 169, 0.2)',
+								backgroundColor:
+									tabIndex == 2
+										? 'rgba(169, 169, 169, 0.2)'
+										: 'rgba(169, 169, 169, 0.1)',
 							},
 							backgroundColor:
-								tabIndex == 2 ? 'rgba(169, 169, 169, 0.1)' : 'inherit',
+								tabIndex == 2 ? 'rgba(169, 169, 169, 0.2)' : 'inherit',
 						}}
 					>
 						<Box
@@ -350,6 +359,6 @@ export default function ProfilePage() {
 			<Box hidden={tabIndex !== 2}>
 				<FollowingGrid userId={userId as string} />
 			</Box>
-		</>
+		</Box>
 	);
 }

@@ -303,3 +303,37 @@ export async function searchForUser(searchString: string) {
 		return [];
 	}
 }
+
+export async function findFollowers(userId: string): Promise<Follower[]> {
+	try {
+		const followerQuery = query(followersRef, where('userId', '==', userId));
+		const querySnapshot = await getDocs(followerQuery);
+
+		const followers: Follower[] = [];
+		for (const document of querySnapshot.docs) {
+			const followerData = document.data() as Follower;
+			followers.push(followerData);
+		}
+		return followers;
+	} catch (error) {
+		console.error('Error finding followers:', error);
+		return [];
+	}
+}
+
+export async function findFollowings(userId: string): Promise<Following[]> {
+	try {
+		const followingQuery = query(followingsRef, where('userId', '==', userId));
+		const querySnapshot = await getDocs(followingQuery);
+
+		const followings: Following[] = [];
+		for (const document of querySnapshot.docs) {
+			const followingData = document.data() as Following;
+			followings.push(followingData);
+		}
+		return followings;
+	} catch (error) {
+		console.error('Error finding followings:', error);
+		return [];
+	}
+}

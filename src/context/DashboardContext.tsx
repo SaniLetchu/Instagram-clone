@@ -16,6 +16,10 @@ interface DashboardContextInterface {
 	listenUserDocument: (userId: string) => void;
 	openSearchDrawer: boolean;
 	setOpenSearchDrawer: React.Dispatch<React.SetStateAction<boolean>>;
+	topNavbarHeight: number;
+	setTopNavbarHeight: React.Dispatch<React.SetStateAction<number>>;
+	bottomNavbarHeight: number;
+	setBottomNavbarHeight: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface DashboardProps {
@@ -34,6 +38,8 @@ export default function DashboardProvider({ children }: DashboardProps) {
 	const [openCommentsDrawer, setOpenCommentsDrawer] = useState(false);
 	const [usersData, setUsersData] = useState<Record<string, User>>({});
 	const [unsubscribes, setUnsubscribes] = useState<(() => void)[]>([]);
+	const [topNavbarHeight, setTopNavbarHeight] = useState(-1);
+	const [bottomNavbarHeight, setBottomNavbarHeight] = useState(-1);
 
 	const listenUserDocument = async (userId: string) => {
 		if (!(userId in usersData)) {
@@ -91,6 +97,10 @@ export default function DashboardProvider({ children }: DashboardProps) {
 			usersData,
 			setOpenSearchDrawer,
 			openSearchDrawer,
+			topNavbarHeight,
+			setBottomNavbarHeight,
+			bottomNavbarHeight,
+			setTopNavbarHeight,
 		}),
 		[
 			openCreatePostModal,
@@ -99,6 +109,8 @@ export default function DashboardProvider({ children }: DashboardProps) {
 			openCommentsDrawer,
 			usersData,
 			openSearchDrawer,
+			topNavbarHeight,
+			bottomNavbarHeight,
 		]
 	);
 

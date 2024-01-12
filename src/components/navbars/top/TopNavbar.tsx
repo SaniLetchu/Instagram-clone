@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Toolbar, AppBar } from '@mui/material';
 import TopNavbarLogo from './TopNavbarLogo';
 import useTheme from '../../../hooks/useTheme';
+import useDashboard from '../../../hooks/useDashboard';
 import TopNavbarSearch from './TopNavbarSearch';
 
 const topNavbarDisplay = {
@@ -18,8 +19,36 @@ export default function TopNavbar() {
 		theme === 'dark'
 			? '0px 1px 1px rgba(250, 250, 250, 0.2)'
 			: '0px 1px 1px rgba(0, 0, 0, 0.2)';
+	const { setTopNavbarHeight, topNavbarHeight } = useDashboard();
+	const navRef = useRef(null);
+	const [observerValue, setObserverValue] = useState<ResizeObserver>();
+	useEffect(() => {
+		const resizeObserver = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				const { height } = entry.contentRect;
+				if (topNavbarHeight != height) {
+					setTopNavbarHeight(height);
+				}
+			}
+		});
+		setObserverValue(resizeObserver);
+		return () => {
+			observerValue?.disconnect();
+		};
+	}, []);
+
+	useEffect(() => {
+		if (navRef.current && observerValue) {
+			observerValue.observe(navRef.current);
+		}
+		return () => {
+			observerValue?.disconnect();
+		};
+	}, [navRef, observerValue]);
+
 	return (
 		<AppBar
+			ref={navRef}
 			position="fixed"
 			sx={{
 				display: topNavbarDisplay,

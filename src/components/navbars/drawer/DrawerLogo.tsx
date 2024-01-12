@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import useTheme from '../../../hooks/useTheme';
 import { Instagram } from '@mui/icons-material';
+import { useLocation } from 'react-router-dom';
 
 const textDisplay = {
 	xs: 'none',
@@ -21,6 +22,9 @@ const logoDisplay = {
 
 export default function DrawerLogo() {
 	const { backgroundColor, textAndIconColor, theme } = useTheme();
+	const { pathname } = useLocation();
+	const displayLogo = pathname === '/messages' ? 'flex' : logoDisplay;
+	const displayText = pathname === '/messages' ? 'none' : textDisplay;
 	return (
 		<>
 			<Box
@@ -28,7 +32,7 @@ export default function DrawerLogo() {
 					py: 3,
 					paddingBottom: 1,
 					bgcolor: backgroundColor,
-					display: textDisplay,
+					display: displayText,
 				}}
 			>
 				{theme === 'dark' && (
@@ -73,7 +77,7 @@ export default function DrawerLogo() {
 					py: 3,
 					paddingBottom: 1,
 					bgcolor: backgroundColor,
-					display: logoDisplay,
+					display: displayLogo,
 					alignItems: 'center',
 					justifyContent: 'center',
 				}}

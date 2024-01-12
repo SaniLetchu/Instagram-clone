@@ -172,7 +172,6 @@ export default function Post({ post }: PostProps) {
 					<Typography sx={{ color: textAndIconColor }}>
 						<strong>{post.username}</strong>
 					</Typography>
-					<ButtonBase />
 				</ButtonBase>
 				{post.caption}
 			</Typography>

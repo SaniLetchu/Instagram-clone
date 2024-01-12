@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useState, useRef, useEffect } from 'react';
 import { BottomNavigation, BottomNavigationAction, Menu } from '@mui/material';
 import {
 	Home,
@@ -28,7 +28,12 @@ export default function BottomNavbar() {
 	const { user } = useAuth();
 	const { theme, secondaryBackgroundColor, textAndIconColor, backgroundColor } =
 		useTheme();
-	const { setOpenCreatePostModal, openCreatePostModal } = useDashboard();
+	const {
+		setOpenCreatePostModal,
+		openCreatePostModal,
+		setBottomNavbarHeight,
+		bottomNavbarHeight,
+	} = useDashboard();
 	function fillIconColor(path: string, selectionBoolean = false) {
 		return pathname === path || selectionBoolean
 			? theme === 'dark'
@@ -48,9 +53,35 @@ export default function BottomNavbar() {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+	const navRef = useRef(null);
+	const [observerValue, setObserverValue] = useState<ResizeObserver>();
+	useEffect(() => {
+		const resizeObserver = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				const { height } = entry.contentRect;
+				if (bottomNavbarHeight != height) {
+					setBottomNavbarHeight(height);
+				}
+			}
+		});
+		setObserverValue(resizeObserver);
+		return () => {
+			observerValue?.disconnect();
+		};
+	}, []);
+
+	useEffect(() => {
+		if (navRef.current && observerValue) {
+			observerValue.observe(navRef.current);
+		}
+		return () => {
+			observerValue?.disconnect();
+		};
+	}, [navRef, observerValue]);
 
 	return (
 		<BottomNavigation
+			ref={navRef}
 			showLabels
 			value={value}
 			onChange={(event, newValue) => {

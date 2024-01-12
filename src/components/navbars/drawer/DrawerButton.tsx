@@ -45,6 +45,8 @@ export default function DrawerButton({
 				? 'white'
 				: 'black'
 			: 'none';
+
+	const displayText = pathname === '/messages' ? 'none' : textDisplay;
 	return (
 		<ListItem
 			key={text}
@@ -84,7 +86,7 @@ export default function DrawerButton({
 				</ListItemIcon>
 				<ListItemText
 					sx={{
-						display: textDisplay,
+						display: displayText,
 						color: textAndIconColor,
 					}}
 					primary={text}

@@ -15,6 +15,7 @@ import DrawerButton from './DrawerButton';
 import DrawerLogo from './DrawerLogo';
 import NavbarMenu from '../NavbarMenu';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const drawerWidth = { xs: 75, sm: 75, md: 75, lg: 245, xl: 245 };
 const drawerDisplay = {
@@ -35,6 +36,8 @@ export default function DrawerNavbar() {
 	} = useDashboard();
 	const navigate = useNavigate();
 	const { user } = useAuth();
+	const { pathname } = useLocation();
+	const widthDrawer = pathname === '/messages' ? 75 : drawerWidth;
 	const boxShadow =
 		theme === 'dark'
 			? '1px 0px 1px rgba(250, 250, 250, 0.2)'
@@ -51,10 +54,10 @@ export default function DrawerNavbar() {
 	return (
 		<Drawer
 			sx={{
-				width: drawerWidth,
+				width: widthDrawer,
 				flexShrink: 0,
 				'& .MuiDrawer-paper': {
-					width: drawerWidth,
+					width: widthDrawer,
 					boxSizing: 'border-box',
 					border: 'none',
 					boxShadow: boxShadow,

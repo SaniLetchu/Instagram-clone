@@ -20,6 +20,7 @@ This project's aim was to implement the basic main features of instagram like: p
 ### Pages
 <details>
   <summary><i>Home page</i></summary>
-  <b>WOW, SO BOLD</b>
+  <img width="1439" alt="image" src="https://github.com/SaniLetchu/Instagram-clone/assets/92727936/1f7ab6a6-cf71-4fdf-8ddc-ecdd4e8cfadc">
+  <img width="496" alt="image" src="https://github.com/SaniLetchu/Instagram-clone/assets/92727936/4772b4fa-49d3-4ea2-a05e-85fc9f9e7f69">
 </details>
   

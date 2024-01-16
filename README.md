@@ -1,4 +1,4 @@
-## Instagram Clone [Visit here](https://saniletchu.github.io/Instagram-clone)
+## [Instagram Clone](https://saniletchu.github.io/Instagram-clone)
 
 This project's aim was to implement the basic main features of instagram like: posts, comments, messages, etc. Styling of the project's webpage also tries to follow the styling of the real instagram website. Designed with mobile users in mind.
 

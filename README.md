@@ -12,10 +12,21 @@ This project aims to implement the fundamental features of Instagram, including 
 #### Posts/Comments
 - Create new Posts
 - Like a post
-- Comment a post
+- Comment on a post
 
 #### Messages/Following
 - Have private conversations with users in mutual following
+- Follow/Unfollow user
+
+### Profile
+- Choosing unique username
+- Editing bio/profile picture
+
+### Search
+- Able to search for profiles by their name
+
+### Theme
+- Able to change Dark/Light modes
 
 ### Pages
 <details>

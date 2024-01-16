@@ -1,13 +1,13 @@
 ## [Instagram Clone](https://saniletchu.github.io/Instagram-clone)
 
-This project's aim was to implement the basic main features of instagram like: posts, comments, messages, etc. Styling of the project's webpage also tries to follow the styling of the real instagram website. Designed with mobile users in mind.
+This project aims to implement the fundamental features of Instagram, including posts, comments, messages, and more. The project's webpage styling is designed to mirror the aesthetics of the official Instagram website, with a focus on mobile responsiveness.
 
 ### Main Features
 
 #### Authentication
 - Sign in/Sign out
 - Password reset
-- Google Sign-in method (Although github-pages does not allow popups)
+- Google Sign-in method (Note: GitHub Pages does not allow popups)
 
 #### Posts/Comments
 - Create new Posts

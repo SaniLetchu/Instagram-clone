@@ -74,6 +74,7 @@ export default function SearchPopover({
 					bgcolor: backgroundColor,
 					display: 'flex',
 					minWidth: 210,
+					maxWidth: 210,
 					flexDirection: 'column',
 					alignItems: 'flex-start',
 					flexGrow: 1,

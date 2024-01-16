@@ -23,18 +23,9 @@ const flexDirection = {
 	xl: 'row',
 };
 
-const mainContainerTopMargin = {
-	xs: 7,
-	sm: 0,
-	md: 0,
-	lg: 0,
-	xl: 0,
-};
-
 export default function DashboardPage() {
 	const { backgroundColor } = useTheme();
-	const { topNavbarHeight, bottomNavbarHeight } = useDashboard();
-	const height = `calc(100vh - ${bottomNavbarHeight}px - ${topNavbarHeight}px)`;
+	const { topNavbarHeight } = useDashboard();
 	return (
 		<Container
 			maxWidth={false}
@@ -46,19 +37,18 @@ export default function DashboardPage() {
 			}}
 		>
 			<CreatePostModal />
+			<TopNavbar />
 			<UsernameModal />
 			<DrawerNavbar />
 			<SearchDrawer />
 			<CommentsInfiniteScroll />
-			<TopNavbar />
 			<Container
 				maxWidth={false}
 				disableGutters
 				sx={{
 					flexGrow: 1,
-					minHeight: height,
-					marginTop: mainContainerTopMargin,
 					bgcolor: backgroundColor,
+					marginTop: `${topNavbarHeight}px`,
 				}}
 			>
 				<Routes>
@@ -67,8 +57,8 @@ export default function DashboardPage() {
 					<Route path="/settings" Component={SettingsPage}></Route>
 					<Route path="/messages" Component={MessagesPage}></Route>
 				</Routes>
+				<BottomNavbar />
 			</Container>
-			<BottomNavbar />
 		</Container>
 	);
 }

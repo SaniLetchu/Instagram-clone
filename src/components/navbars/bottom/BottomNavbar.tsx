@@ -1,4 +1,10 @@
-import React, { MouseEvent, useState, useRef, useEffect } from 'react';
+import React, {
+	MouseEvent,
+	useState,
+	useRef,
+	useEffect,
+	ElementType,
+} from 'react';
 import { BottomNavigation, BottomNavigationAction, Menu } from '@mui/material';
 import {
 	Home,
@@ -31,8 +37,8 @@ export default function BottomNavbar() {
 	const {
 		setOpenCreatePostModal,
 		openCreatePostModal,
-		setBottomNavbarHeight,
 		bottomNavbarHeight,
+		setBottomNavbarHeight,
 	} = useDashboard();
 	function fillIconColor(path: string, selectionBoolean = false) {
 		return pathname === path || selectionBoolean
@@ -53,31 +59,29 @@ export default function BottomNavbar() {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	const navRef = useRef(null);
-	const [observerValue, setObserverValue] = useState<ResizeObserver>();
+	const navRef = useRef<null | HTMLDivElement>(null);
 	useEffect(() => {
-		const resizeObserver = new ResizeObserver((entries) => {
-			for (const entry of entries) {
-				const { height } = entry.contentRect;
-				if (bottomNavbarHeight != height) {
-					setBottomNavbarHeight(height);
-				}
+		const updateHeight = () => {
+			if (navRef.current) {
+				const height = navRef.current.clientHeight;
+				setBottomNavbarHeight(height);
 			}
-		});
-		setObserverValue(resizeObserver);
+		};
+
+		const handleResize = () => {
+			updateHeight();
+		};
+
+		setTimeout(() => {
+			handleResize();
+		}, 500);
+
+		window.addEventListener('resize', handleResize);
+
 		return () => {
-			observerValue?.disconnect();
+			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
-
-	useEffect(() => {
-		if (navRef.current && observerValue) {
-			observerValue.observe(navRef.current);
-		}
-		return () => {
-			observerValue?.disconnect();
-		};
-	}, [navRef, observerValue]);
 
 	return (
 		<BottomNavigation

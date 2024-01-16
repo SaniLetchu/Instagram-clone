@@ -78,12 +78,25 @@ export default function SearchResult({ userId }: SearchResultProps) {
 								alignItems: 'end',
 							}}
 						>
-							<Typography sx={{ color: textAndIconColor }}>
+							<Typography
+								sx={{
+									color: textAndIconColor,
+									overflow: 'hidden',
+									whiteSpace: 'nowrap',
+								}}
+							>
 								<strong>{usersData[userId].username}</strong>{' '}
 							</Typography>
 						</Box>
 						<Box>
-							<Typography sx={{ color: textAndIconColor }} variant="caption">
+							<Typography
+								sx={{
+									color: textAndIconColor,
+									overflow: 'hidden',
+									whiteSpace: 'nowrap',
+								}}
+								variant="caption"
+							>
 								{usersData[userId].bio}
 							</Typography>
 						</Box>

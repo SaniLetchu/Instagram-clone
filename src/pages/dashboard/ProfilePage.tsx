@@ -90,7 +90,7 @@ export default function ProfilePage() {
 	}, [userId]);
 
 	return (
-		<Box sx={{ minHeight: '100vh' }}>
+		<Box sx={{ minHeight: '100dvh' }}>
 			<Container
 				maxWidth={false}
 				disableGutters

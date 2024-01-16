@@ -10,6 +10,7 @@ export default function SettingsPage() {
 			maxWidth={false}
 			disableGutters
 			sx={{
+				minHeight: '100dvh',
 				display: 'flex',
 				flexDirection: 'column',
 				bgcolor: backgroundColor,

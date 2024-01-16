@@ -37,6 +37,7 @@ export type Message = {
 	senderId: string;
 	recipientId: string;
 	text: string;
+	isRead: boolean;
 	timestamp: Timestamp;
 };
 
@@ -57,3 +58,4 @@ export type CommentWithId = Comment & { id: string };
 export type UserWithId = User & { id: string };
 export type FollowingWithId = Following & { id: string };
 export type FollowerWithId = Follower & { id: string };
+export type MessageWithId = Message & { id: string };

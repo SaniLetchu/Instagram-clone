@@ -25,6 +25,7 @@ import {
 	Follower,
 	Following,
 	UserWithId,
+	Message,
 } from '../types/firestore';
 
 const usersRef = collection(firestore, 'users');
@@ -335,5 +336,28 @@ export async function findFollowings(userId: string): Promise<Following[]> {
 	} catch (error) {
 		console.error('Error finding followings:', error);
 		return [];
+	}
+}
+
+export async function createMessage(
+	senderId: string,
+	recipientId: string,
+	text: string
+) {
+	try {
+		const newMessage: Message = {
+			senderId,
+			recipientId,
+			text,
+			isRead: false,
+			timestamp: serverTimestamp() as Timestamp,
+		};
+
+		await addDoc(messagesRef, newMessage);
+
+		return true;
+	} catch (error) {
+		console.error('Error creating message:', error);
+		return false;
 	}
 }

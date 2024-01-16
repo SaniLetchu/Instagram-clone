@@ -11,10 +11,16 @@ import { Message, AccountCircle, ChatBubbleOutline } from '@mui/icons-material';
 import useTheme from '../../hooks/useTheme';
 import useAuth from '../../hooks/useAuth';
 import useDashboard from '../../hooks/useDashboard';
-import { findFollowers, findFollowings } from '../../services/firestore';
+import {
+	findFollowers,
+	findFollowings,
+	createMessage,
+} from '../../services/firestore';
+import MessagesInfiniteScroll from '../../components/infinitescrolls/Messages/MessagesInfiniteScroll';
 import { Following, Follower } from '../../types/firestore';
 
-const drawerWidth = { xs: 115, sm: 115, md: 395, lg: 395, xl: 395 };
+const drawerWidth = { xs: '15vw', sm: 115, md: 395, lg: 395, xl: 395 };
+const imageSize = { xs: 30, sm: 60, md: 60, lg: 60, xl: 60 };
 const logoDisplay = {
 	xs: 'block',
 	sm: 'block',
@@ -66,7 +72,7 @@ export default function MessagesPage() {
 		setSearchValue(event.target.value);
 	};
 
-	const height = `calc(100vh - ${bottomNavbarHeight}px - ${topNavbarHeight}px)`;
+	const height = `calc(100dvh - ${bottomNavbarHeight}px - ${topNavbarHeight}px)`;
 
 	const [followers, setFollowers] = useState<Follower[]>([]);
 	const [following, setFollowing] = useState<Following[]>([]);
@@ -186,13 +192,16 @@ export default function MessagesPage() {
 											<>
 												{!usersData[follower.followerUserId]
 													.profileImageUrl && (
-													<AccountCircle sx={{ fontSize: 60, color: 'gray' }} />
+													<AccountCircle
+														sx={{ fontSize: imageSize, color: 'gray' }}
+													/>
 												)}
 												{usersData[follower.followerUserId].profileImageUrl && (
-													<img
-														style={{
-															height: 60,
-															width: 60,
+													<Box
+														component="img"
+														sx={{
+															height: imageSize,
+															width: imageSize,
 															objectFit: 'cover',
 															borderRadius: '50%',
 															border: 'solid 1px',
@@ -292,7 +301,10 @@ export default function MessagesPage() {
 								<strong>{usersData[selectedChat].username}</strong>
 							</Typography>
 						</Box>
-						<Box sx={{ flexGrow: 1 }}></Box>
+						<MessagesInfiniteScroll
+							userId={user?.uid as string}
+							secondUserId={selectedChat}
+						/>
 						<Box
 							sx={{
 								height: 75,
@@ -304,7 +316,10 @@ export default function MessagesPage() {
 						>
 							<Box
 								sx={{
-									border: '1px solid rgba(250, 250, 250, 0.2)',
+									border:
+										theme == 'dark'
+											? '1px solid rgba(250, 250, 250, 0.2)'
+											: '1px solid rgba(0, 0, 0, 0.2)',
 									padding: 0.75,
 									px: 3,
 									width: '100%',
@@ -314,8 +329,13 @@ export default function MessagesPage() {
 							>
 								<form
 									onSubmit={(e) => {
-										e.preventDefault(); // Prevents the default form submission behavior
-										// Handle form submission logic here
+										e.preventDefault();
+										createMessage(
+											user?.uid as string,
+											selectedChat,
+											searchValue
+										);
+										setSearchValue('');
 									}}
 								>
 									<TextField
@@ -331,7 +351,10 @@ export default function MessagesPage() {
 											input: {
 												color: textAndIconColor,
 												'&::placeholder': {
-													color: 'rgb(300, 300, 300)',
+													color:
+														theme == 'dark'
+															? 'rgb(300, 300, 300)'
+															: 'rgb(0, 0, 0)',
 												},
 											},
 										}}

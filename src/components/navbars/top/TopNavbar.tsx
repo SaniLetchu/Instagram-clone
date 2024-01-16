@@ -19,32 +19,30 @@ export default function TopNavbar() {
 		theme === 'dark'
 			? '0px 1px 1px rgba(250, 250, 250, 0.2)'
 			: '0px 1px 1px rgba(0, 0, 0, 0.2)';
-	const { setTopNavbarHeight, topNavbarHeight } = useDashboard();
-	const navRef = useRef(null);
-	const [observerValue, setObserverValue] = useState<ResizeObserver>();
+	const { setTopNavbarHeight } = useDashboard();
+	const navRef = useRef<null | HTMLDivElement>(null);
 	useEffect(() => {
-		const resizeObserver = new ResizeObserver((entries) => {
-			for (const entry of entries) {
-				const { height } = entry.contentRect;
-				if (topNavbarHeight != height) {
-					setTopNavbarHeight(height);
-				}
+		const updateHeight = () => {
+			if (navRef.current) {
+				const height = navRef.current.clientHeight;
+				setTopNavbarHeight(height);
 			}
-		});
-		setObserverValue(resizeObserver);
+		};
+
+		const handleResize = () => {
+			updateHeight();
+		};
+
+		setTimeout(() => {
+			handleResize();
+		}, 500);
+
+		window.addEventListener('resize', handleResize);
+
 		return () => {
-			observerValue?.disconnect();
+			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
-
-	useEffect(() => {
-		if (navRef.current && observerValue) {
-			observerValue.observe(navRef.current);
-		}
-		return () => {
-			observerValue?.disconnect();
-		};
-	}, [navRef, observerValue]);
 
 	return (
 		<AppBar

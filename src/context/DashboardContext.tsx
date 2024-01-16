@@ -38,8 +38,8 @@ export default function DashboardProvider({ children }: DashboardProps) {
 	const [openCommentsDrawer, setOpenCommentsDrawer] = useState(false);
 	const [usersData, setUsersData] = useState<Record<string, User>>({});
 	const [unsubscribes, setUnsubscribes] = useState<(() => void)[]>([]);
-	const [topNavbarHeight, setTopNavbarHeight] = useState(-1);
-	const [bottomNavbarHeight, setBottomNavbarHeight] = useState(-1);
+	const [topNavbarHeight, setTopNavbarHeight] = useState(56);
+	const [bottomNavbarHeight, setBottomNavbarHeight] = useState(56);
 
 	const listenUserDocument = async (userId: string) => {
 		if (!(userId in usersData)) {

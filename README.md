@@ -38,4 +38,17 @@ This project's aim was to implement the basic main features of instagram like: p
   <img width="1440" alt="image" src="https://github.com/SaniLetchu/Instagram-clone/assets/92727936/d0c3a120-161a-48d8-8525-4d5abff54e4b">
   <img width="498" alt="image" src="https://github.com/SaniLetchu/Instagram-clone/assets/92727936/ee76bec3-dce2-4f5f-a2d9-78c34abb8615">
 </details>
+
+### **Test User Credentials**
+**Caitlyn**
+Username: `profile1@gmail.com`
+Password: `profile1`
+
+**Michael**
+Username: `profile2@gmail.com`
+Password: `profile2`
+
+**David**
+Username: `profile3@gmail.com`
+Password: `profile3`
   

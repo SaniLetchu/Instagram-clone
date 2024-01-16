@@ -19,6 +19,7 @@ import {
 	Message as MessageType,
 	MessageWithId,
 } from '../../../types/firestore';
+import useTheme from '../../../hooks/useTheme';
 import Message from './Message';
 
 interface MessagesInfiniteScrollProps {
@@ -39,6 +40,7 @@ export default function MessagesInfiniteScroll({
 	const [unsubscribes, setUnsubscribes] = useState<(() => void)[]>([]);
 	const [unsubscribesNew, setUnsubscribesNew] = useState<(() => void)[]>([]);
 
+	const { textAndIconColor } = useTheme();
 	const processedMessageIds = new Set();
 
 	const fetchMoreMessages = async () => {
@@ -242,6 +244,25 @@ export default function MessagesInfiniteScroll({
 				flexDirection: 'column-reverse',
 			}}
 		>
+			{messages.length == 0 && newMessages.length == 0 && (
+				<Box
+					sx={{
+						flexGrow: 1,
+						height: '100%',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<Typography sx={{ color: textAndIconColor }} variant="overline">
+						No messages
+					</Typography>
+					<Typography sx={{ color: textAndIconColor }} variant="caption">
+						Be the first one to start the conversation
+					</Typography>
+				</Box>
+			)}
 			<Box sx={{ display: 'flex', flexDirection: 'column-reverse' }}>
 				{newMessages.map((message) => (
 					<Message key={message.id} message={message} />

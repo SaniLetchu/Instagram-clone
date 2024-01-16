@@ -18,14 +18,14 @@ This project aims to implement the fundamental features of Instagram, including 
 - Have private conversations with users in mutual following
 - Follow/Unfollow user
 
-### Profile
+#### Profile
 - Choosing unique username
 - Editing bio/profile picture
 
-### Search
+#### Search
 - Able to search for profiles by their name
 
-### Theme
+#### Theme
 - Able to change Dark/Light modes
 
 ### Pages
